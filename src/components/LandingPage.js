@@ -6,6 +6,34 @@ import { H1 } from '../utils/fonts';
 import shipImage from '../assets/ship.png';
 import fileImage from '../assets/file.png';
 
+const fileRequest = (e) => {
+  const file = e.target.files[0];
+
+  const formData = new FormData();
+  formData.append('pdf_file', file);
+
+  fetch('http://127.0.0.1:8000/process-pdf/', {
+    method: 'post',
+    body: formData,
+  })
+    // .then(
+    //   (res) => {
+    //     if (res.ok) {
+    //       console.log('sending pdf ok');
+    //     } else {
+    //       console.log('something went wrong');
+    //       console.log(res);
+    //     }
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //     console.error('failed due to network error or cross domain');
+    //   }
+    // )
+    .then((res) => res.json())
+    .then((json) => console.log(json));
+};
+
 const LandingPageStyle = styled(Container)`
   width: 100%;
   height: 100vh;
@@ -58,8 +86,9 @@ const LandingPage = ({ setOpenFormatter }) => {
           name={id}
           type="file"
           accept="application/pdf"
-          onChange={() => {
-            setOpenFormatter(true);
+          onChange={(e) => {
+            fileRequest(e);
+            // setOpenFormatter(true);
           }}
         />
       </FlexRow>
