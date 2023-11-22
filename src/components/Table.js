@@ -45,9 +45,11 @@ const Table = ({ items }) => {
               return (
                 <ItemStyle
                   key={`item-${i}-${j}`}
+                  contenteditable="true"
                   padding="14px 8px"
                   color={theme.colors.black}
                   alignmentY="flex-start"
+                  onFocus={(e) => console.log(e)}
                 >
                   {item}
                 </ItemStyle>

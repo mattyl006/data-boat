@@ -17,7 +17,7 @@ const Formatter = ({ pdfProcessingResult }) => {
   return (
     <FormatterStyle>
       <Source imageUrls={imageUrls} imageBboxes={imageBboxes} />
-      <Target />
+      <Target imageUrls={imageUrls} imageBboxes={imageBboxes} />
     </FormatterStyle>
   );
 };
