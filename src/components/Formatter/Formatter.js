@@ -9,8 +9,8 @@ const Formatter = ({ pdfProcessingResult }) => {
 
   React.useEffect(() => {
     if (pdfProcessingResult?.length) {
-      setImageUrls(pdfProcessingResult?.map((image) => image.image_url));
-      setImageBboxes(pdfProcessingResult?.map((image) => image.bboxes));
+      setImageUrls(pdfProcessingResult?.map((obj) => obj.image.image_url));
+      setImageBboxes(pdfProcessingResult?.map((obj) => obj.bboxes));
     }
   }, [pdfProcessingResult]);
 

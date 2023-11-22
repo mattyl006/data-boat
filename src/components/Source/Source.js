@@ -23,16 +23,22 @@ const Source = ({ imageUrls, imageBboxes }) => {
       return imageUrls.map((url, i) => {
         return (
           <SourceImgContainerStyle key={`pdf-image-${i}`}>
-            {imageBboxes[i].map((bbox, j) => {
+            {imageBboxes[i].map((bbox) => {
               const x = bbox.x_center;
               const y = bbox.y_center;
               const width = bbox.width;
               const height = bbox.height;
               const text = bbox.text;
 
+              const id = `bbox-${bbox.id}`;
+              if (id === 'bbox-7_161') {
+                console.log(id);
+              }
+
               return (
                 <BboxStyle
-                  key={`bbox-${i}-${j}`}
+                  key={`bbox-${i}-${bbox.id}`}
+                  id={id}
                   x={x}
                   y={y}
                   width={width}

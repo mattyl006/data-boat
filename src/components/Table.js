@@ -50,6 +50,11 @@ const Table = ({ items }) => {
                   color={theme.colors.black}
                   alignmentY="flex-start"
                   onFocus={(e) => console.log(e)}
+                  onClick={() => {
+                    const element = document.getElementById('bbox-7_161');
+                    console.log(element);
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }}
                 >
                   {item}
                 </ItemStyle>

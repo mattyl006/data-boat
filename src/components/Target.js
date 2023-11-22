@@ -7,18 +7,6 @@ import Loading from './Loading';
 
 const items = [
   {
-    a: 'G0001',
-    b: 'Usługi serwisowe',
-    c: '',
-    d: `Zakres prac nie ujęty w specyfikacji armatorskiej a
-    będący zakresem pracy Stoczni wynikającym z
-    instrukcji i procedur oraz zasad bezpieczeństwa (np
-    nadzór i asysta, dodatkowy trap stoczniowy, obsług
-    energo - elektryczna statku, kontrola jakości itd. itp
-    WYCENA W OPARCIU O CENNIK BIURA HANDLOWEG
-    WYCENIA KIEROWNIK REMONTU`,
-  },
-  {
     a: '2.0',
     b: 'DESCRIPTION OF CONVERSION',
     c: '',
