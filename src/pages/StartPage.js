@@ -1,16 +1,21 @@
 import React from 'react';
 
 import Formatter from '../components/Formatter';
-import LandingPage from '../components/LandingPage';
+import LandingSpace from '../components/LandingSpace/LandingSpace';
 
-const StartPage = () => {
-  const [openFormatter, setOpenFormatter] = React.useState(false);
+const StartPage = ({ openFormatter, setOpenFormatter }) => {
+  const [pdfProcessingResult, setPdfProcessingResult] = React.useState(false);
 
   if (openFormatter) {
-    return <Formatter />;
+    return <Formatter pdfProcessingResult={pdfProcessingResult} />;
   }
 
-  return <LandingPage setOpenFormatter={setOpenFormatter} />;
+  return (
+    <LandingSpace
+      setOpenFormatter={setOpenFormatter}
+      setPdfProcessingResult={setPdfProcessingResult}
+    />
+  );
 };
 
 export default StartPage;

@@ -5,7 +5,7 @@ import shipImage from '../assets/ship.svg';
 import { Svg } from '../utils/containers';
 import { Body } from '../utils/fonts';
 
-const NavBar = () => {
+const NavBar = ({ setOpenFormatter }) => {
   return (
     <FlexRow
       width="100%"
@@ -24,6 +24,8 @@ const NavBar = () => {
         size="cover"
         width="44px"
         height="44px"
+        cursor="pointer"
+        onClick={() => setOpenFormatter(false)}
       />
       <Body
         padding="6px 16px"
