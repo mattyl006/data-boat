@@ -9,8 +9,11 @@ import {
   BboxStyle,
   BboxTextStyle,
 } from './SourceStyles';
+import { TEST_TARGET_ITEMS } from '../../utils/globals';
+import { useDispatch } from 'react-redux';
+import { addBbox } from '../../redux/bboxesSlice';
 
-const Source = ({ imageUrls, imageBboxes }) => {
+const Source = ({ imageUrls, imageBboxes, outputBboxes }) => {
   const imageUrlsLength = imageUrls?.length;
   const imageBboxesLength = imageBboxes?.length;
   const imagesRendered =
@@ -18,7 +21,9 @@ const Source = ({ imageUrls, imageBboxes }) => {
     imageBboxesLength &&
     imageUrlsLength === imageBboxesLength;
 
-  const imagesRender = () => {
+  const dispatch = useDispatch();
+
+  const imagesRender = React.useCallback(() => {
     if (imagesRendered) {
       return imageUrls.map((url, i) => {
         return (
@@ -29,15 +34,35 @@ const Source = ({ imageUrls, imageBboxes }) => {
               const width = bbox.width;
               const height = bbox.height;
               const text = bbox.text;
-
               const id = `bbox-${bbox.id}`;
-              if (id === 'bbox-7_161') {
-                console.log(id);
-              }
+
+              TEST_TARGET_ITEMS.forEach((item, index) => {
+                let a = '';
+                let b = '';
+                let c = '';
+                let d = '';
+
+                if (text.includes(item.a + ' ')) {
+                  a = id;
+                }
+                if (text.includes(item.b + ' ')) {
+                  b = id;
+                }
+                const itemD = item.d.replace('\n', '');
+                if (itemD.includes(text)) {
+                  console.log(itemD);
+                  d = id;
+                }
+                if (a.length || b.length || d.length) {
+                  dispatch(
+                    addBbox({ index: index, row: { a: a, b: b, c: c, d: d } })
+                  );
+                }
+              });
 
               return (
                 <BboxStyle
-                  key={`bbox-${i}-${bbox.id}`}
+                  key={id}
                   id={id}
                   x={x}
                   y={y}
@@ -54,7 +79,7 @@ const Source = ({ imageUrls, imageBboxes }) => {
         );
       });
     }
-  };
+  }, [imageBboxes, imageUrls, imagesRendered, dispatch]);
 
   const sourceLoadingRender = () => {
     if (!imagesRendered) {

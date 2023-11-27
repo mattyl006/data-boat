@@ -39,8 +39,6 @@ const BboxStyle = styled(Container)`
   left: ${({ x, width }) =>
     `calc((100% * ${x}) - (100% * ${width} / 2) - 4px)`};
   z-index: 3;
-  border: ${({ bboxFocus }) =>
-    bboxFocus ? 'border: 1px solid rgba(0, 208, 132, 1)' : 'none'};
 
   &:hover {
     border: 1px solid rgba(0, 208, 132, 1);
