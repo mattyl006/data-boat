@@ -5,6 +5,7 @@ const TableStyle = styled(Container)``;
 
 const ItemStyle = styled(Container)`
   position: relative;
+  outline: none;
 
   &::before {
     content: '';
@@ -12,7 +13,7 @@ const ItemStyle = styled(Container)`
     top: 0;
     left: 0;
     display: block;
-    width: 2px;
+    width: 1px;
     height: calc(100% + 2px);
     background-color: black;
   }
@@ -24,8 +25,12 @@ const ItemStyle = styled(Container)`
     left: 0;
     display: block;
     width: calc(100% + 2px);
-    height: 2px;
+    height: 1px;
     background-color: black;
+  }
+
+  &:focus {
+    border: 2px solid ${({ theme }) => theme.colors.green};
   }
 `;
 

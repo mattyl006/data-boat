@@ -45,7 +45,7 @@ const Table = ({ items }) => {
                   }}
                   onFocus={() => {
                     const newSelectedBboxes = [];
-                    storeBboxes[i][attr].forEach((id) => {
+                    storeBboxes[i][attr]?.forEach((id) => {
                       newSelectedBboxes.push(id);
                       const element = document.getElementById(id);
                       element.classList.add('bboxFocus');
@@ -54,19 +54,21 @@ const Table = ({ items }) => {
                   }}
                   onClick={() => {
                     const elementBboxes = storeBboxes[i][attr];
-                    const pages = [
-                      ...new Set(
-                        elementBboxes.map((bbox) =>
-                          bbox.split('_')[0].replace('bbox', 'pdf-image')
-                        )
-                      ),
-                    ];
-                    let pageId = pages[scrollPage];
-                    let element = document.getElementById(pageId);
-                    element.scrollIntoView({ behavior: 'smooth' });
-                    if (scrollPage < pages.length - 1) {
-                      setScrollPage(scrollPage + 1);
-                    } else setScrollPage(0);
+                    if (elementBboxes) {
+                      const pages = [
+                        ...new Set(
+                          elementBboxes.map((bbox) =>
+                            bbox.split('_')[0].replace('bbox', 'pdf-image')
+                          )
+                        ),
+                      ];
+                      let pageId = pages[scrollPage];
+                      let element = document.getElementById(pageId);
+                      element.scrollIntoView({ behavior: 'smooth' });
+                      if (scrollPage < pages.length - 1) {
+                        setScrollPage(scrollPage + 1);
+                      } else setScrollPage(0);
+                    }
                   }}
                 >
                   {item}
