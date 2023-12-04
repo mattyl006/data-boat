@@ -5,13 +5,16 @@ const SourceStyle = styled(FlexRow)`
   width: 50%;
   justify-content: flex-start;
   height: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
 `;
 
 const SourceImagesContainerStyle = styled(FlexColumn)`
-  overflow-y: scroll;
+  overflow: scroll;
   padding: 60px 85px 0;
   width: 100%;
   height: 100%;
+  justify-content: flex-start;
 `;
 
 const SourceImg = styled.img`

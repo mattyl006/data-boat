@@ -4,6 +4,7 @@ import Loading from '../Loading';
 import {
   SourceImg,
   SourceImgContainerStyle,
+  SourceImagesContainerStyle,
   SourceStyle,
   BboxStyle,
   BboxTextStyle,
@@ -11,56 +12,7 @@ import {
 import { TEST_TARGET_ITEMS } from '../../utils/globals';
 import { useDispatch } from 'react-redux';
 import { addBbox } from '../../redux/bboxesSlice';
-import { Svg } from '../../utils/containers';
-import styled from 'styled-components';
-import theme from '../../utils/theme';
-import {
-  TransformWrapper,
-  TransformComponent,
-  useControls,
-} from 'react-zoom-pan-pinch';
-import resetIco from '../../assets/reset.svg';
-import zoomInIco from '../../assets/zoomIn.svg';
-import zoomOutIco from '../../assets/zoomOut.svg';
-
-const MenuStyle = styled(FlexColumn)`
-  padding: 14px 0;
-  justify-content: flex-start;
-  background: linear-gradient(180deg, #2c95d8 0%, #18356d 91.15%);
-  width: 60px;
-  height: 100%;
-  gap: 28px;
-`;
-
-const Menu = () => {
-  const { zoomIn, zoomOut, resetTransform } = useControls();
-
-  return (
-    <MenuStyle>
-      <Svg
-        src={zoomInIco}
-        width="20px"
-        height="20px"
-        backgroundColor={theme.colors.white}
-        onClick={() => zoomIn()}
-      />
-      <Svg
-        src={zoomOutIco}
-        width="20px"
-        height="20px"
-        backgroundColor={theme.colors.white}
-        onClick={() => zoomOut()}
-      />
-      <Svg
-        src={resetIco}
-        width="20px"
-        height="20px"
-        backgroundColor={theme.colors.white}
-        onClick={() => resetTransform()}
-      />
-    </MenuStyle>
-  );
-};
+import Menu from '../Menu';
 
 const Source = ({ images, imageBboxes }) => {
   const imagesLength = images?.length;
@@ -140,29 +92,13 @@ const Source = ({ images, imageBboxes }) => {
     }
   };
 
-  // overflow-y: scroll;
-  // padding: 60px 85px 0;
-  // width: 100%;
-  // height: 100%;
-
   return (
     <SourceStyle key="sourceStyle">
-      <TransformWrapper disabled>
-        <Menu key="menu" />
-        <TransformComponent
-          wrapperStyle={{
-            overflowY: 'scroll',
-            padding: '60px 85px 0',
-            width: '100%',
-            height: '100%',
-          }}
-        >
-          {/* <SourceImagesContainerStyle> */}
-          {imagesRender()}
-          {sourceLoadingRender()}
-          {/* </SourceImagesContainerStyle> */}
-        </TransformComponent>
-      </TransformWrapper>
+      <Menu key="menu" />
+      <SourceImagesContainerStyle>
+        {imagesRender()}
+        {sourceLoadingRender()}
+      </SourceImagesContainerStyle>
     </SourceStyle>
   );
 };
