@@ -1,12 +1,17 @@
 import styled from 'styled-components';
-import { Container, FlexColumn } from '../../utils/containers';
+import { Container, FlexColumn, FlexRow } from '../../utils/containers';
 
-const SourceStyle = styled(FlexColumn)`
+const SourceStyle = styled(FlexRow)`
   width: 50%;
-  padding: 60px 85px 0;
-  height: 100%;
-  overflow-y: scroll;
   justify-content: flex-start;
+  height: 100%;
+`;
+
+const SourceImagesContainerStyle = styled(FlexColumn)`
+  overflow-y: scroll;
+  padding: 60px 85px 0;
+  width: 100%;
+  height: 100%;
 `;
 
 const SourceImg = styled.img`
@@ -51,4 +56,5 @@ export {
   SourceImgContainerStyle,
   BboxStyle,
   BboxTextStyle,
+  SourceImagesContainerStyle,
 };
