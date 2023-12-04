@@ -4,20 +4,25 @@ import Target from '../Target';
 import FormatterStyle from './FormatterStyle';
 
 const Formatter = ({ pdfProcessingResult }) => {
-  const [imageUrls, setImageUrls] = React.useState([]);
+  const [images, setImages] = React.useState([]);
   const [imageBboxes, setImageBboxes] = React.useState([]);
 
   React.useEffect(() => {
     if (pdfProcessingResult?.length) {
-      setImageUrls(pdfProcessingResult?.map((obj) => obj.image.image_url));
+      setImages(
+        pdfProcessingResult?.map((obj) => ({
+          url: obj.image.image_url,
+          id: obj.image.id,
+        }))
+      );
       setImageBboxes(pdfProcessingResult?.map((obj) => obj.bboxes));
     }
   }, [pdfProcessingResult]);
 
   return (
     <FormatterStyle>
-      <Source imageUrls={imageUrls} imageBboxes={imageBboxes} />
-      <Target imageUrls={imageUrls} imageBboxes={imageBboxes} />
+      <Source images={images} imageBboxes={imageBboxes} />
+      <Target images={images} imageBboxes={imageBboxes} />
     </FormatterStyle>
   );
 };

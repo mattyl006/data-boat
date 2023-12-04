@@ -14,13 +14,11 @@ const TargetStyle = styled(FlexColumn)`
   padding: 60px 85px 0;
 `;
 
-const Target = ({ imageUrls, imageBboxes }) => {
-  const imageUrlsLength = imageUrls?.length;
+const Target = ({ images, imageBboxes }) => {
+  const imagesLength = images?.length;
   const imageBboxesLength = imageBboxes?.length;
   const imagesRendered =
-    imageUrlsLength &&
-    imageBboxesLength &&
-    imageUrlsLength === imageBboxesLength;
+    imagesLength && imageBboxesLength && imagesLength === imageBboxesLength;
 
   if (imagesRendered) {
     return (

@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux';
 const Table = ({ items }) => {
   const storeBboxes = useSelector((state) => state.bboxes.bboxes);
   const [selectedBboxes, setSelectedBboxes] = React.useState([]);
-  const [scrollIterator, setScrollIterator] = React.useState(0);
+  const [scrollPage, setScrollPage] = React.useState(0);
+
   return (
     <TableStyle width="100%" backgroundColor={theme.colors.white}>
       {items.map((row, i) => {
@@ -40,7 +41,7 @@ const Table = ({ items }) => {
                         element.classList.remove('bboxFocus');
                       });
                     }
-                    setScrollIterator(0);
+                    setScrollPage(0);
                   }}
                   onFocus={() => {
                     const newSelectedBboxes = [];
@@ -52,14 +53,20 @@ const Table = ({ items }) => {
                     setSelectedBboxes(newSelectedBboxes);
                   }}
                   onClick={() => {
-                    console.log(scrollIterator);
-                    const element = document.getElementById(
-                      storeBboxes[i][attr][scrollIterator]
-                    );
+                    const elementBboxes = storeBboxes[i][attr];
+                    const pages = [
+                      ...new Set(
+                        elementBboxes.map((bbox) =>
+                          bbox.split('_')[0].replace('bbox', 'pdf-image')
+                        )
+                      ),
+                    ];
+                    let pageId = pages[scrollPage];
+                    let element = document.getElementById(pageId);
                     element.scrollIntoView({ behavior: 'smooth' });
-                    if (scrollIterator < storeBboxes[i][attr].length - 1) {
-                      setScrollIterator(scrollIterator + 1);
-                    } else setScrollIterator(0);
+                    if (scrollPage < pages.length - 1) {
+                      setScrollPage(scrollPage + 1);
+                    } else setScrollPage(0);
                   }}
                 >
                   {item}

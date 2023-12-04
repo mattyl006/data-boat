@@ -13,21 +13,20 @@ import { TEST_TARGET_ITEMS } from '../../utils/globals';
 import { useDispatch } from 'react-redux';
 import { addBbox } from '../../redux/bboxesSlice';
 
-const Source = ({ imageUrls, imageBboxes, outputBboxes }) => {
-  const imageUrlsLength = imageUrls?.length;
+const Source = ({ images, imageBboxes }) => {
+  const imagesLength = images?.length;
   const imageBboxesLength = imageBboxes?.length;
   const imagesRendered =
-    imageUrlsLength &&
-    imageBboxesLength &&
-    imageUrlsLength === imageBboxesLength;
+    imagesLength && imageBboxesLength && imagesLength === imageBboxesLength;
 
   const dispatch = useDispatch();
 
   const imagesRender = React.useCallback(() => {
     if (imagesRendered) {
-      return imageUrls.map((url, i) => {
+      return images.map((image, i) => {
+        const imageId = `pdf-image-${image.id}`;
         return (
-          <SourceImgContainerStyle key={`pdf-image-${i}`}>
+          <SourceImgContainerStyle id={imageId} key={imageId}>
             {imageBboxes[i].map((bbox) => {
               const x = bbox.x_center;
               const y = bbox.y_center;
@@ -45,7 +44,7 @@ const Source = ({ imageUrls, imageBboxes, outputBboxes }) => {
                 if (text.includes(item.a + ' ')) {
                   a = id;
                 }
-                if (text.includes(item.b + ' ')) {
+                if (text.includes(item.b)) {
                   b = id;
                 }
                 const itemD = item.d.replace('\n', '');
@@ -74,12 +73,12 @@ const Source = ({ imageUrls, imageBboxes, outputBboxes }) => {
                 </BboxStyle>
               );
             })}
-            <SourceImg src={`http://127.0.0.1:8000${url}`} alt="" />
+            <SourceImg src={`http://127.0.0.1:8000${image.url}`} alt="" />
           </SourceImgContainerStyle>
         );
       });
     }
-  }, [imageBboxes, imageUrls, imagesRendered, dispatch]);
+  }, [imageBboxes, images, imagesRendered, dispatch]);
 
   const sourceLoadingRender = () => {
     if (!imagesRendered) {
