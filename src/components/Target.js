@@ -14,18 +14,13 @@ const TargetStyle = styled(FlexColumn)`
   padding: 60px 85px 0;
 `;
 
-const Target = ({ images, imageBboxes }) => {
-  const imagesLength = images?.length;
-  const imageBboxesLength = imageBboxes?.length;
-  const imagesRendered =
-    imagesLength && imageBboxesLength && imagesLength === imageBboxesLength;
-
-  if (imagesRendered) {
+const Target = ({ tableData }) => {
+  if (tableData?.length) {
     return (
       <>
         <Menu />
         <TargetStyle>
-          <Table items={TEST_TARGET_ITEMS} />
+          <Table items={tableData} />
         </TargetStyle>
       </>
     );

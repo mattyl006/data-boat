@@ -1,13 +1,13 @@
 import { API } from '../utils/globals';
 
-const getPdfData = (file, setResult) => {
+const getData = (file, setResult) => {
   fetch(`${API}/static/files/${file}`, {
     method: 'get',
   })
     .then(
       (res) => {
         if (res.ok) {
-          console.log('getting pdf ok');
+          console.log('getting data ok');
           return res.json();
         } else {
           console.log('something went wrong');
@@ -26,4 +26,4 @@ const getPdfData = (file, setResult) => {
     });
 };
 
-export default getPdfData;
+export default getData;

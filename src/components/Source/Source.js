@@ -20,8 +20,6 @@ const Source = ({ images, imageBboxes }) => {
   const imagesRendered =
     imagesLength && imageBboxesLength && imagesLength === imageBboxesLength;
 
-  const dispatch = useDispatch();
-
   const imagesRender = React.useCallback(() => {
     if (imagesRendered) {
       return images.map((image, i) => {
@@ -35,31 +33,6 @@ const Source = ({ images, imageBboxes }) => {
               const height = bbox.height;
               const text = bbox.text;
               const id = `bbox-${bbox.id}`;
-
-              TEST_TARGET_ITEMS.forEach((item, index) => {
-                let a = '';
-                let b = '';
-                let c = '';
-                let d = '';
-
-                if (text.includes(item.a + ' ')) {
-                  a = id;
-                }
-                if (text.includes(item.b)) {
-                  b = id;
-                }
-                const itemD = item.d.replace('\n', '');
-                if (itemD.includes(text)) {
-                  console.log(itemD);
-                  d = id;
-                }
-                if (a.length || b.length || d.length) {
-                  dispatch(
-                    addBbox({ index: index, row: { a: a, b: b, c: c, d: d } })
-                  );
-                }
-              });
-
               return (
                 <BboxStyle
                   key={id}
@@ -80,7 +53,7 @@ const Source = ({ images, imageBboxes }) => {
         );
       });
     }
-  }, [imageBboxes, images, imagesRendered, dispatch]);
+  }, [imageBboxes, images, imagesRendered]);
 
   const sourceLoadingRender = () => {
     if (!imagesRendered) {

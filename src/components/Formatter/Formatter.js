@@ -2,17 +2,18 @@ import React from 'react';
 import Source from '../Source/Source';
 import Target from '../Target';
 import FormatterStyle from './FormatterStyle';
-import getPdfData from '../../api/getPdfData';
+import getData from '../../api/getData';
 
 const Formatter = ({ pdfProcessingResult }) => {
   const [pdfData, setPdfData] = React.useState([]);
   const [images, setImages] = React.useState([]);
   const [imageBboxes, setImageBboxes] = React.useState([]);
+  const [tableData, setTableData] = React.useState([]);
 
   React.useEffect(() => {
     if (pdfProcessingResult?.length) {
-      console.log(pdfProcessingResult);
-      getPdfData(pdfProcessingResult[0].pdf_url, setPdfData);
+      getData(pdfProcessingResult[0].pdf_url, setPdfData);
+      getData(pdfProcessingResult[0].table_url, setTableData);
     }
   }, [pdfProcessingResult]);
 
@@ -32,7 +33,7 @@ const Formatter = ({ pdfProcessingResult }) => {
   return (
     <FormatterStyle>
       <Source images={images} imageBboxes={imageBboxes} />
-      <Target images={images} imageBboxes={imageBboxes} />
+      <Target tableData={Object.values(tableData)} />
     </FormatterStyle>
   );
 };
