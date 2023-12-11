@@ -16,7 +16,6 @@ const Table = ({ items }) => {
         const bboxIds = Object.values(row).map(
           (item) => '' + Object.values(item).map((bbox) => bbox.id + '')
         );
-        console.log(bboxIds);
         dispatch(addRowId(bboxIds));
         return (
           <Grid

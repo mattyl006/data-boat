@@ -8,6 +8,7 @@ import resetIco from '../assets/reset.svg';
 import zoomInIco from '../assets/zoomIn.svg';
 import zoomOutIco from '../assets/zoomOut.svg';
 import downloadIco from '../assets/download.svg';
+import { write, read } from 'xlsx';
 
 const TargetStyle = styled(FlexColumn)`
   width: 50%;
@@ -18,13 +19,45 @@ const TargetStyle = styled(FlexColumn)`
 `;
 
 const Target = ({ tableData }) => {
+  console.log(tableData);
+  const [objUrl, setObjUrl] = React.useState(null);
+
+  const downloadTable = () => {
+    let tsvContent = `a\tb\tc\td\n`;
+    tableData.forEach((row) => {
+      const rowA = Object.values(row['1st'])
+        .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
+        .join(' ');
+      const rowB = Object.values(row['2nd'])
+        .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
+        .join(' ');
+      const rowC = Object.values(row['3rd'])
+        .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
+        .join(' ');
+      const rowD = Object.values(row['4th'])
+        .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
+        .join(' ');
+      tsvContent += `${rowA}\t${rowB}\t${rowC}\t${rowD}\n`;
+    });
+    const wb = read(tsvContent.split(',').join('","'), {
+      type: 'string',
+      raw: true,
+    });
+    const data = write(wb, { type: 'buffer', bookType: 'xlsx' });
+    const blob = new Blob([data], { type: 'text/tsv;charset=utf-8,' });
+    setObjUrl(URL.createObjectURL(blob));
+  };
+
   const icons = [
     { src: zoomInIco, handler: () => console.log('zoomIn'), disabled: true },
     { src: zoomOutIco, handler: () => console.log('zoomOut'), disabled: true },
     { src: resetIco, handler: () => console.log('reset'), disabled: true },
     {
       src: downloadIco,
-      handler: () => console.log('download'),
+      as: 'a',
+      href: objUrl,
+      download: 'test.xlsx',
+      handler: () => downloadTable(),
       disabled: false,
     },
   ];

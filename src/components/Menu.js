@@ -14,13 +14,15 @@ const MenuStyle = styled(FlexColumn)`
 `;
 
 const Menu = ({ icons }) => {
-  console.log(icons);
   return (
     <MenuStyle>
       {icons?.map((icon) => {
         return (
           <Svg
             src={icon.src}
+            as={icon.as}
+            href={icon.href}
+            download={icon.download}
             width="20px"
             height="20px"
             backgroundColor={
