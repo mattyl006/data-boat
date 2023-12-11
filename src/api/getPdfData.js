@@ -1,17 +1,13 @@
 import { API } from '../utils/globals';
 
-const processPdf = (e, setResult) => {
-  const file = e.target.files[0];
-  const formData = new FormData();
-  formData.append('pdf_file', file);
-  fetch(`${API}/process-pdf/`, {
-    method: 'post',
-    body: formData,
+const getPdfData = (file, setResult) => {
+  fetch(`${API}/static/files/${file}`, {
+    method: 'get',
   })
     .then(
       (res) => {
         if (res.ok) {
-          console.log('sending pdf ok');
+          console.log('getting pdf ok');
           return res.json();
         } else {
           console.log('something went wrong');
@@ -30,4 +26,4 @@ const processPdf = (e, setResult) => {
     });
 };
 
-export default processPdf;
+export default getPdfData;

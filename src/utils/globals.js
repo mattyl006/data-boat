@@ -1,6 +1,6 @@
 const ELEMENTS_PER_PAGE = 12;
 const MINI_DESCRIPTION_LENGTH = 70;
-const API = '';
+const API = 'http://127.0.0.1:8000';
 
 const MINI_DESCRIPTION_RENDER = (description) => {
   if (description) {

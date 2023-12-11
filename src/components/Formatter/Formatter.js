@@ -2,22 +2,32 @@ import React from 'react';
 import Source from '../Source/Source';
 import Target from '../Target';
 import FormatterStyle from './FormatterStyle';
+import getPdfData from '../../api/getPdfData';
 
 const Formatter = ({ pdfProcessingResult }) => {
+  const [pdfData, setPdfData] = React.useState([]);
   const [images, setImages] = React.useState([]);
   const [imageBboxes, setImageBboxes] = React.useState([]);
 
   React.useEffect(() => {
     if (pdfProcessingResult?.length) {
+      console.log(pdfProcessingResult);
+      getPdfData(pdfProcessingResult[0].pdf_url, setPdfData);
+    }
+  }, [pdfProcessingResult]);
+
+  React.useEffect(() => {
+    const pdfDataArray = Object.values(pdfData);
+    if (pdfDataArray?.length) {
       setImages(
-        pdfProcessingResult?.map((obj) => ({
+        pdfDataArray.map((obj) => ({
           url: obj.image.image_url,
           id: obj.image.id,
         }))
       );
-      setImageBboxes(pdfProcessingResult?.map((obj) => obj.bboxes));
+      setImageBboxes(pdfDataArray.map((obj) => obj.bboxes));
     }
-  }, [pdfProcessingResult]);
+  }, [pdfData]);
 
   return (
     <FormatterStyle>
