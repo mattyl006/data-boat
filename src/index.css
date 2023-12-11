@@ -31,3 +31,7 @@ input[type="number"] {
 .bboxFocus {
   border: 1px solid rgba(0, 208, 132, 1) !important;
 }
+
+.tableItemFocus {
+  border: 2px solid rgba(0, 208, 132, 1) !important;
+}

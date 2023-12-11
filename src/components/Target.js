@@ -4,7 +4,6 @@ import Menu from './Menu';
 import Table from './Table/Table';
 import styled from 'styled-components';
 import Loading from './Loading';
-import { TEST_TARGET_ITEMS } from '../utils/globals';
 
 const TargetStyle = styled(FlexColumn)`
   width: 50%;

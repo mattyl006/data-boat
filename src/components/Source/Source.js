@@ -9,18 +9,40 @@ import {
   BboxStyle,
   BboxTextStyle,
 } from './SourceStyles';
-import { TEST_TARGET_ITEMS } from '../../utils/globals';
-import { useDispatch } from 'react-redux';
-import { addBbox } from '../../redux/bboxesSlice';
+import { API } from '../../utils/globals';
 import Menu from '../Menu';
+import { useSelector } from 'react-redux';
 
 const Source = ({ images, imageBboxes }) => {
   const imagesLength = images?.length;
   const imageBboxesLength = imageBboxes?.length;
   const imagesRendered =
     imagesLength && imageBboxesLength && imagesLength === imageBboxesLength;
+  const tableRowIds = useSelector((state) => state.rowIds.rowIds);
+  const [selectedTableItem, setSelectedTableItem] = React.useState(null);
 
-  const imagesRender = React.useCallback(() => {
+  const findTableRow = (bboxId) => {
+    let findedItemId = null;
+    tableRowIds.forEach((rowIds) => {
+      rowIds.forEach((itemIds) => {
+        if (itemIds.includes(bboxId)) {
+          findedItemId = itemIds;
+        }
+      });
+    });
+    if (findedItemId) {
+      if (selectedTableItem) {
+        const element = document.getElementById(`bboxes-${selectedTableItem}`);
+        element.classList.remove('tableItemFocus');
+      }
+      setSelectedTableItem(findedItemId);
+      const element = document.getElementById(`bboxes-${findedItemId}`);
+      element.classList.add('tableItemFocus');
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const imagesRender = () => {
     if (imagesRendered) {
       return images.map((image, i) => {
         const imageId = `pdf-image-${image.id}`;
@@ -42,18 +64,18 @@ const Source = ({ images, imageBboxes }) => {
                   width={width}
                   height={height}
                   bboxFocus={false}
-                  onClick={() => console.log(text)}
+                  onClick={() => findTableRow(bbox.id)}
                 >
                   <BboxTextStyle>{text}</BboxTextStyle>
                 </BboxStyle>
               );
             })}
-            <SourceImg src={`http://127.0.0.1:8000${image.url}`} alt="" />
+            <SourceImg src={`${API}${image.url}`} alt="" />
           </SourceImgContainerStyle>
         );
       });
     }
-  }, [imageBboxes, images, imagesRendered]);
+  };
 
   const sourceLoadingRender = () => {
     if (!imagesRendered) {
