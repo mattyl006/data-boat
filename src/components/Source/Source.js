@@ -12,6 +12,9 @@ import {
 import { API } from '../../utils/globals';
 import Menu from '../Menu';
 import { useSelector } from 'react-redux';
+import resetIco from '../../assets/reset.svg';
+import zoomInIco from '../../assets/zoomIn.svg';
+import zoomOutIco from '../../assets/zoomOut.svg';
 
 const Source = ({ images, imageBboxes }) => {
   const imagesLength = images?.length;
@@ -87,9 +90,15 @@ const Source = ({ images, imageBboxes }) => {
     }
   };
 
+  const icons = [
+    { src: zoomInIco, handler: () => console.log('zoomIn'), disabled: true },
+    { src: zoomOutIco, handler: () => console.log('zoomOut'), disabled: true },
+    { src: resetIco, handler: () => console.log('reset'), disabled: true },
+  ];
+
   return (
     <SourceStyle key="sourceStyle">
-      <Menu key="menu" />
+      <Menu key="menu" icons={icons} />
       <SourceImagesContainerStyle>
         {imagesRender()}
         {sourceLoadingRender()}
