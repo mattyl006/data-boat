@@ -10,6 +10,14 @@ const Table = ({ items }) => {
   const [scrollPage, setScrollPage] = React.useState(0);
   const dispatch = useDispatch();
 
+  const handlePaste = (event) => {
+    event.preventDefault();
+    const pastedValue = event.clipboardData.getData('text');
+    if (typeof pastedValue === 'string') {
+      event.target.innerHTML = event.target.innerHTML + pastedValue.toString();
+    }
+  };
+
   return (
     <TableStyle width="100%" backgroundColor={theme.colors.white}>
       {items.map((row, i) => {
@@ -35,6 +43,7 @@ const Table = ({ items }) => {
                   contenteditable="true"
                   padding="14px 8px"
                   color={theme.colors.black}
+                  onPaste={(e) => handlePaste(e)}
                   alignmentY="flex-start"
                   onBlur={() => {
                     if (selectedBboxes.length) {
