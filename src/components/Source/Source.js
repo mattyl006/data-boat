@@ -51,13 +51,13 @@ const Source = ({ images, imageBboxes }) => {
         const imageId = `pdf-image-${image.id}`;
         return (
           <SourceImgContainerStyle id={imageId} key={imageId}>
-            {imageBboxes[i].map((bbox) => {
+            {imageBboxes[i].map((bbox, j) => {
               const x = bbox.x_center;
               const y = bbox.y_center;
               const width = bbox.width;
               const height = bbox.height;
               const text = bbox.text;
-              const id = `bbox-${bbox.id}`;
+              const id = `bbox-${bbox.id}_pdf-${j}`;
               return (
                 <BboxStyle
                   key={id}

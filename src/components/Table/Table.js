@@ -38,8 +38,8 @@ const Table = ({ items }) => {
                   alignmentY="flex-start"
                   onBlur={() => {
                     if (selectedBboxes.length) {
-                      selectedBboxes.forEach((id) => {
-                        const element = document.getElementById(id);
+                      selectedBboxes.forEach((element) => {
+                        console.log(element);
                         element.classList.remove('bboxFocus');
                       });
                     }
@@ -49,9 +49,12 @@ const Table = ({ items }) => {
                     const newSelectedBboxes = [];
                     itemValue?.forEach((bbox) => {
                       const id = `bbox-${bbox.id}`;
-                      newSelectedBboxes.push(id);
-                      const element = document.getElementById(id);
-                      element.classList.add('bboxFocus');
+                      const elements = document.querySelectorAll(`[id^=${id}]`);
+                      elements.forEach((element) => {
+                        console.log(element);
+                        newSelectedBboxes.push(element);
+                        element?.classList.add('bboxFocus');
+                      });
                     });
                     setSelectedBboxes(newSelectedBboxes);
                   }}
