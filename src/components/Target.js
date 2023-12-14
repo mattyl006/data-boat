@@ -19,7 +19,6 @@ const TargetStyle = styled(FlexColumn)`
 `;
 
 const Target = ({ tableData }) => {
-  console.log(tableData);
   const [objUrl, setObjUrl] = React.useState(null);
 
   const downloadTable = () => {
@@ -67,7 +66,7 @@ const Target = ({ tableData }) => {
       <>
         <Menu icons={icons} />
         <TargetStyle>
-          <Table items={tableData} />
+          <Table />
         </TargetStyle>
       </>
     );

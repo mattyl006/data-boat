@@ -4,11 +4,14 @@ import theme from '../../utils/theme';
 import { TableStyle, ItemStyle } from './TableStyles';
 import { useDispatch } from 'react-redux';
 import { addRowId } from '../../redux/rowIdsSlice';
+import { useSelector } from 'react-redux';
+import { tableDataUpdate } from '../../redux/tableDataSlice';
 
-const Table = ({ items }) => {
+const Table = () => {
   const [selectedBboxes, setSelectedBboxes] = React.useState([]);
   const [scrollPage, setScrollPage] = React.useState(0);
   const dispatch = useDispatch();
+  const items = useSelector((state) => state.tableData.tableData);
 
   const handlePaste = (event) => {
     event.preventDefault();
@@ -17,6 +20,17 @@ const Table = ({ items }) => {
       event.target.innerHTML = event.target.innerHTML + pastedValue.toString();
     }
   };
+
+  const renderItemValue = (itemValue) => {
+    if (itemValue[0]?.textValue) {
+      return itemValue[0].textValue;
+    }
+    return itemValue.map((bbox) => {
+      return bbox.text + ' ';
+    });
+  };
+
+  console.log(items);
 
   return (
     <TableStyle width="100%" backgroundColor={theme.colors.white}>
@@ -81,10 +95,26 @@ const Table = ({ items }) => {
                       } else setScrollPage(0);
                     }
                   }}
+                  onInput={(event) => {
+                    const textValue = event.target.innerText;
+                    dispatch(
+                      tableDataUpdate({
+                        row: i,
+                        column: itemKey,
+                        value: textValue,
+                      })
+                    );
+                    const el = event.target;
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+                    selection.removeAllRanges();
+                    range.selectNodeContents(el);
+                    range.collapse(false);
+                    selection.addRange(range);
+                    el.focus();
+                  }}
                 >
-                  {itemValue.map((bbox) => {
-                    return bbox.text + ' ';
-                  })}
+                  {renderItemValue(itemValue)}
                 </ItemStyle>
               );
             })}
