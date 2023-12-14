@@ -9,6 +9,7 @@ import zoomInIco from '../assets/zoomIn.svg';
 import zoomOutIco from '../assets/zoomOut.svg';
 import downloadIco from '../assets/download.svg';
 import { write, read } from 'xlsx';
+import { useSelector } from 'react-redux';
 
 const TargetStyle = styled(FlexColumn)`
   width: 50%;
@@ -18,24 +19,33 @@ const TargetStyle = styled(FlexColumn)`
   padding: 60px 85px 0;
 `;
 
-const Target = ({ tableData }) => {
+const Target = () => {
   const [objUrl, setObjUrl] = React.useState(null);
+  const tableData = useSelector((state) => state.tableData.tableData);
 
   const downloadTable = () => {
     let tsvContent = `a\tb\tc\td\n`;
     tableData.forEach((row) => {
-      const rowA = Object.values(row['1st'])
-        .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
-        .join(' ');
-      const rowB = Object.values(row['2nd'])
-        .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
-        .join(' ');
-      const rowC = Object.values(row['3rd'])
-        .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
-        .join(' ');
-      const rowD = Object.values(row['4th'])
-        .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
-        .join(' ');
+      const rowA = row['1st'][0]?.textValue
+        ? row['1st'][0]?.textValue.replaceAll('\n', '').replaceAll('\t', '')
+        : Object.values(row['1st'])
+            .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
+            .join(' ');
+      const rowB = row['2nd'][0]?.textValue
+        ? row['2nd'][0]?.textValue.replaceAll('\n', '').replaceAll('\t', '')
+        : Object.values(row['2nd'])
+            .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
+            .join(' ');
+      const rowC = row['3rd'][0]?.textValue
+        ? row['3rd'][0]?.textValue.replaceAll('\n', '').replaceAll('\t', '')
+        : Object.values(row['3rd'])
+            .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
+            .join(' ');
+      const rowD = row['4th'][0]?.textValue
+        ? row['4th'][0]?.textValue.replaceAll('\n', '').replaceAll('\t', '')
+        : Object.values(row['4th'])
+            .map((bbox) => bbox.text.replaceAll('\n', '').replaceAll('\t', ''))
+            .join(' ');
       tsvContent += `${rowA}\t${rowB}\t${rowC}\t${rowD}\n`;
     });
     const wb = read(tsvContent.split(',').join('","'), {

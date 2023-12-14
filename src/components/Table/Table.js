@@ -13,13 +13,13 @@ const Table = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.tableData.tableData);
 
-  const handlePaste = (event) => {
-    event.preventDefault();
-    const pastedValue = event.clipboardData.getData('text');
-    if (typeof pastedValue === 'string') {
-      event.target.innerHTML = event.target.innerHTML + pastedValue.toString();
-    }
-  };
+  // const handlePaste = (event) => {
+  //   event.preventDefault();
+  //   const pastedValue = event.clipboardData.getData('text');
+  //   if (typeof pastedValue === 'string') {
+  //     event.target.innerHTML = event.target.innerHTML + pastedValue.toString();
+  //   }
+  // };
 
   const renderItemValue = (itemValue) => {
     if (itemValue[0]?.textValue) {
@@ -54,10 +54,11 @@ const Table = () => {
                 <ItemStyle
                   id={`bboxes-${bboxIds[j]}`}
                   key={`item-${i}-${itemKey}`}
-                  contenteditable="true"
+                  as="textarea"
+                  type="text"
+                  // contenteditable="true"
                   padding="14px 8px"
                   color={theme.colors.black}
-                  onPaste={(e) => handlePaste(e)}
                   alignmentY="flex-start"
                   onBlur={() => {
                     if (selectedBboxes.length) {
@@ -89,14 +90,16 @@ const Table = () => {
                       ];
                       let pageId = pages[scrollPage];
                       const element = document.getElementById(pageId);
-                      element.scrollIntoView({ behavior: 'smooth' });
-                      if (scrollPage < pages.length - 1) {
-                        setScrollPage(scrollPage + 1);
-                      } else setScrollPage(0);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                        if (scrollPage < pages.length - 1) {
+                          setScrollPage(scrollPage + 1);
+                        } else setScrollPage(0);
+                      }
                     }
                   }}
-                  onInput={(event) => {
-                    const textValue = event.target.innerText;
+                  onChange={(event) => {
+                    const textValue = event.target.value;
                     dispatch(
                       tableDataUpdate({
                         row: i,
@@ -104,18 +107,9 @@ const Table = () => {
                         value: textValue,
                       })
                     );
-                    const el = event.target;
-                    const selection = window.getSelection();
-                    const range = document.createRange();
-                    selection.removeAllRanges();
-                    range.selectNodeContents(el);
-                    range.collapse(false);
-                    selection.addRange(range);
-                    el.focus();
                   }}
-                >
-                  {renderItemValue(itemValue)}
-                </ItemStyle>
+                  value={renderItemValue(itemValue)}
+                />
               );
             })}
           </Grid>
