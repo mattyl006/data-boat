@@ -1,24 +1,15 @@
 import React from 'react';
-import { FlexColumn, Svg } from '../utils/containers';
-import styled from 'styled-components';
-import theme from '../utils/theme';
-
-const MenuStyle = styled(FlexColumn)`
-  background: linear-gradient(180deg, #2c95d8 0%, #18356d 91.15%);
-  padding: 14px 0;
-  width: 60px;
-  height: 100%;
-  gap: 28px;
-  justify-content: flex-start;
-  z-index: 2;
-`;
+import { Svg } from '../../utils/containers';
+import theme from '../../utils/theme';
+import MenuStyle from './MenuStyle';
 
 const Menu = ({ icons }) => {
   return (
     <MenuStyle>
-      {icons?.map((icon) => {
+      {icons?.map((icon, i) => {
         return (
           <Svg
+            key={`icon-${i}`}
             src={icon.src}
             as={icon.as}
             href={icon.href}

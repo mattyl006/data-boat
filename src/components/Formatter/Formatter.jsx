@@ -1,6 +1,6 @@
 import React from 'react';
 import Source from '../Source/Source';
-import Target from '../Target';
+import Target from '../Target/Target';
 import FormatterStyle from './FormatterStyle';
 import getData from '../../api/getData';
 import { useDispatch } from 'react-redux';
@@ -22,7 +22,6 @@ const Formatter = ({ pdfProcessingResult }) => {
 
   React.useEffect(() => {
     dispatch(tableDataInit(Object.values(initialTableData)));
-    console.log('siema');
   }, [dispatch, initialTableData]);
 
   React.useEffect(() => {

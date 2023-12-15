@@ -1,19 +1,6 @@
-const ELEMENTS_PER_PAGE = 12;
-const MINI_DESCRIPTION_LENGTH = 70;
+const ELEMENTS_PER_PAGE = 20;
+// const API = 'http://karida-gpu.vm.wmi.amu.edu.pl:8000';
 const API = 'http://127.0.0.1:8000';
-
-const MINI_DESCRIPTION_RENDER = (description) => {
-  if (description) {
-    if (description.length <= MINI_DESCRIPTION_LENGTH) return description;
-    return `${description.slice(0, MINI_DESCRIPTION_LENGTH)}...`;
-  }
-  return 'xxx';
-};
-
-const CALC_PAGES = (objects) => {
-  if (objects.length === 0) return 1;
-  return Math.ceil(objects.length / ELEMENTS_PER_PAGE);
-};
 
 const IS_MOBILE = () => {
   return document.body.clientWidth <= 768;
@@ -34,12 +21,4 @@ const TEST_TARGET_ITEMS = [
   },
 ];
 
-export {
-  ELEMENTS_PER_PAGE,
-  API,
-  MINI_DESCRIPTION_LENGTH,
-  TEST_TARGET_ITEMS,
-  MINI_DESCRIPTION_RENDER,
-  CALC_PAGES,
-  IS_MOBILE,
-};
+export { API, TEST_TARGET_ITEMS, ELEMENTS_PER_PAGE, IS_MOBILE };

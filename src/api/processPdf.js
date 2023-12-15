@@ -4,7 +4,6 @@ const processPdf = (e, setResult) => {
   const file = e.target.files[0];
   const formData = new FormData();
   formData.append('pdf_file', file);
-  console.log(formData);
   fetch(`${API}/process-pdf/`, {
     method: 'post',
     body: formData,
