@@ -25,7 +25,7 @@ const Table = () => {
     if (itemValue[0]?.textValue) {
       return itemValue[0].textValue;
     }
-    return itemValue.map((bbox) => {
+    return itemValue?.map((bbox) => {
       return bbox.text + ' ';
     });
   };
@@ -35,8 +35,8 @@ const Table = () => {
   return (
     <TableStyle width="100%" backgroundColor={theme.colors.white}>
       {items.map((row, i) => {
-        const bboxIds = Object.values(row).map(
-          (item) => '' + Object.values(item).map((bbox) => bbox.id + '')
+        const bboxIds = Object.values(row)?.map(
+          (item) => '' + Object.values(item)?.map((bbox) => bbox.id + '')
         );
         dispatch(addRowId(bboxIds));
         return (
@@ -61,10 +61,10 @@ const Table = () => {
                   color={theme.colors.black}
                   alignmentY="flex-start"
                   onBlur={() => {
-                    if (selectedBboxes.length) {
+                    if (selectedBboxes?.length) {
                       selectedBboxes.forEach((id) => {
                         const element = document.getElementById(id);
-                        element.classList.remove('bboxFocus');
+                        if (element) element.classList.remove('bboxFocus');
                       });
                     }
                     setScrollPage(0);
@@ -75,7 +75,7 @@ const Table = () => {
                       const id = `bbox-${bbox.id}`;
                       newSelectedBboxes.push(id);
                       const element = document.getElementById(id);
-                      element.classList.add('bboxFocus');
+                      if (element) element.classList.add('bboxFocus');
                     });
                     setSelectedBboxes(newSelectedBboxes);
                   }}
@@ -83,8 +83,8 @@ const Table = () => {
                     if (itemValue) {
                       const pages = [
                         ...new Set(
-                          itemValue.map(
-                            (bbox) => 'pdf-image-' + bbox.id.split('_')[0]
+                          itemValue?.map(
+                            (bbox) => 'pdf-image-' + bbox.id?.split('_')[0]
                           )
                         ),
                       ];
