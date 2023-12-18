@@ -13,6 +13,8 @@ const Formatter = ({ pdfProcessingResult }) => {
   const [initialTableData, setInitialTableData] = React.useState([]);
   const dispatch = useDispatch();
 
+  console.log(pdfData);
+
   React.useEffect(() => {
     if (pdfProcessingResult?.length) {
       getData(pdfProcessingResult[0].pdf_url, setPdfData);
