@@ -15,9 +15,11 @@ import RowMenu from '../RowMenu';
 const Table = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.tableData.tableData);
+  const itemsChecked = useSelector((state) => state.tableData.tableItemsChecked);
   const [selectedBboxes, setSelectedBboxes] = React.useState([]);
   const [scrollPage, setScrollPage] = React.useState(0);
   const [rowMenuOpen, setRowMenuOpen] = React.useState('');
+  const [rowMenuHover, setRowMenuHover] = React.useState(false);
 
   return (
     <TableStyle>
@@ -31,7 +33,8 @@ const Table = () => {
             id={`row-${bboxIds}`}
             key={`row-${i}`}
             onClick={() => setRowMenuOpen(`rowMenuOpen-${i}`)}
-            onBlur={() => setRowMenuOpen("")}
+            onBlur={() => {if (!rowMenuHover) setRowMenuOpen("")}}
+            check={itemsChecked[i]}
           >
             {Object.entries(row).map((item, j) => {
               const itemKey = item[0];
@@ -61,7 +64,7 @@ const Table = () => {
                 />
               );
             })}
-            <RowMenu i={i} rowMenuOpen={rowMenuOpen} />
+            <RowMenu i={i} rowMenuOpen={rowMenuOpen} setRowMenuHover={setRowMenuHover} />
           </RowStyle>
         );
       })}

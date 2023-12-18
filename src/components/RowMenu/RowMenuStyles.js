@@ -17,7 +17,8 @@ const RowMenuRowStyle = styled(FlexRow)`
 const RowMenuIconStyle = styled(Svg)`
   width: ${({ iconSize }) => iconSize};
   height: ${({ iconSize }) => iconSize};
-  background-color: ${({ theme }) => theme.colors.white200};
+  background-color: ${({ theme, rowChecked }) =>
+    rowChecked ? theme.colors.greenStrong : theme.colors.white200};
   cursor: pointer;
 `;
 

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   tableData: [],
+  tableItemsChecked: [],
 };
 
 export const tableDataSlice = createSlice({
@@ -9,7 +10,9 @@ export const tableDataSlice = createSlice({
   initialState,
   reducers: {
     tableDataInit: (state, action) => {
-      state.tableData = action.payload;
+      const data = action.payload;
+      state.tableData = data;
+      state.tableItemsChecked = Array(data.length).fill(false);
     },
     tableDataUpdate: (state, action) => {
       const { row, column, value } = action.payload;
@@ -18,9 +21,14 @@ export const tableDataSlice = createSlice({
         textValue: value,
       };
     },
+    tableItemsCheckedUpdate: (state, action) => {
+      const { i, value } = action.payload;
+      state.tableItemsChecked[i] = value;
+    },
   },
 });
 
-export const { tableDataInit, tableDataUpdate } = tableDataSlice.actions;
+export const { tableDataInit, tableDataUpdate, tableItemsCheckedUpdate } =
+  tableDataSlice.actions;
 
 export default tableDataSlice.reducer;
