@@ -9,7 +9,11 @@ import {
   RowMenuIconStyle,
 } from './RowMenuStyles';
 import { useDispatch } from 'react-redux';
-import { tableItemsCheckedUpdate } from '../../redux/tableDataSlice';
+import {
+  tableItemsCheckedUpdate,
+  tableDataAddNewRow,
+  tableDataDeleteRow
+} from '../../redux/tableDataSlice';
 
 const RowMenu = ({ i, rowMenuOpen, setRowMenuHover }) => {
   const dispatch = useDispatch();
@@ -21,12 +25,20 @@ const RowMenu = ({ i, rowMenuOpen, setRowMenuHover }) => {
     setRowChecked(!rowChecked);
     let value = true;
     if (rowChecked) value = false;
-    dispatch(tableItemsCheckedUpdate({i: i, value: value}));
-  }
+    dispatch(tableItemsCheckedUpdate({ i: i, value: value }));
+  };
+
+  const addRowHandle = (i) => {
+    dispatch(tableDataAddNewRow({ row: i }));
+  };
 
   if (rowMenuOpen === `rowMenuOpen-${i}`) {
     return (
-      <RowMenuStyle freeSpaces={freeSpaces} onMouseEnter={() => setRowMenuHover(true)} onMouseLeave={() => setRowMenuHover(false)}>
+      <RowMenuStyle
+        freeSpaces={freeSpaces}
+        onMouseEnter={() => setRowMenuHover(true)}
+        onMouseLeave={() => setRowMenuHover(false)}
+      >
         <RowMenuRowStyle freeSpaces={freeSpaces}>
           <RowMenuIconStyle
             iconSize={iconSize}
@@ -34,11 +46,15 @@ const RowMenu = ({ i, rowMenuOpen, setRowMenuHover }) => {
             src={checkIco}
             onClick={() => checkRowHandle(i)}
           />
-          <RowMenuIconStyle iconSize={iconSize} src={addRowIco} />
+          <RowMenuIconStyle
+            iconSize={iconSize}
+            src={addRowIco}
+            onClick={() => addRowHandle(i)}
+          />
         </RowMenuRowStyle>
         <RowMenuRowStyle freeSpaces={freeSpaces}>
           <RowMenuIconStyle iconSize={iconSize} src={dragRowIco} />
-          <RowMenuIconStyle iconSize={iconSize} src={removeRowIco} />
+          <RowMenuIconStyle iconSize={iconSize} src={removeRowIco} onClick={() => dispatch(tableDataDeleteRow({row: i}))} />
         </RowMenuRowStyle>
       </RowMenuStyle>
     );
