@@ -6,31 +6,33 @@ import TableItem from '../TableItem';
 import { useDispatch } from 'react-redux';
 import { tableOpenMenuRowUpdate } from '../../redux/tableDataSlice';
 
-const TableRow = ({i, row, bboxIds}) => {
+const TableRow = ({ i, row, bboxIds }) => {
   const dispatch = useDispatch();
-  const itemsChecked = useSelector(
-    (state) => state.tableData.tableRowsChecked
-  );
+  const itemsChecked = useSelector((state) => state.tableData.tableRowsChecked);
   const [rowMenuHover, setRowMenuHover] = React.useState(false);
   return (
     <TableRowStyle
       id={`row-${bboxIds}`}
       key={`row-${i}`}
-      onClick={() => dispatch(tableOpenMenuRowUpdate({i: i, value: true}))}
+      onClick={() => dispatch(tableOpenMenuRowUpdate({ i: i, value: true }))}
       onBlur={() => {
-        if (!rowMenuHover) dispatch(tableOpenMenuRowUpdate({i: i, value: false}));
+        if (!rowMenuHover)
+          dispatch(tableOpenMenuRowUpdate({ i: i, value: false }));
       }}
       check={itemsChecked[i]}
     >
       {Object.entries(row).map((item, j) => {
         return (
-          <TableItem i={i} j={j} item={item} bboxIds={bboxIds} />
+          <TableItem
+            key={`item-${i}-${j}`}
+            i={i}
+            j={j}
+            item={item}
+            bboxIds={bboxIds}
+          />
         );
       })}
-      <RowMenu
-        i={i}
-        setRowMenuHover={setRowMenuHover}
-      />
+      <RowMenu i={i} setRowMenuHover={setRowMenuHover} />
     </TableRowStyle>
   );
 };

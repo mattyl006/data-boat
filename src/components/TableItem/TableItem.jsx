@@ -18,7 +18,6 @@ const TableItem = ({i, j, item, bboxIds}) => {
     return (
       <TableItemStyle
         id={`bboxes-${bboxIds[j]}`}
-        key={`item-${i}-${itemKey}`}
         as="textarea"
         type="text"
         onBlur={() => onItemBlur(selectedBboxes, setScrollPage)}

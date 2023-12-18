@@ -10,6 +10,10 @@ const addValueToArray = (obj, value, index) => {
   return [...obj.slice(0, index), value, ...obj.slice(index)];
 };
 
+const removeValueFromArray = (obj, index) => {
+  return [...obj.slice(0, index), ...obj.slice(index + 1)];
+};
+
 export const tableDataSlice = createSlice({
   name: 'tableData',
   initialState,
@@ -48,9 +52,18 @@ export const tableDataSlice = createSlice({
     },
     tableDataDeleteRow: (state, action) => {
       const { row } = action.payload;
-      const newTableData = state.tableData.slice();
-      delete newTableData[row];
+      const newTableData = removeValueFromArray(state.tableData, row);
+      const newTableRowsChecked = removeValueFromArray(
+        state.tableRowsChecked,
+        row
+      );
+      const newTableOpenMenuRow = removeValueFromArray(
+        state.tableOpenMenuRow,
+        row
+      );
       state.tableData = newTableData;
+      state.tableRowsChecked = newTableRowsChecked;
+      state.tableOpenMenuRow = newTableOpenMenuRow;
     },
     tableRowsCheckedUpdate: (state, action) => {
       const { i, value } = action.payload;
