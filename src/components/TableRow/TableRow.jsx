@@ -3,20 +3,22 @@ import TableRowStyle from './TableRowStyle';
 import { useSelector } from 'react-redux';
 import RowMenu from '../RowMenu';
 import TableItem from '../TableItem';
+import { useDispatch } from 'react-redux';
+import { tableOpenMenuRowUpdate } from '../../redux/tableDataSlice';
 
 const TableRow = ({i, row, bboxIds}) => {
+  const dispatch = useDispatch();
   const itemsChecked = useSelector(
     (state) => state.tableData.tableItemsChecked
   );
-  const [rowMenuOpen, setRowMenuOpen] = React.useState('');
   const [rowMenuHover, setRowMenuHover] = React.useState(false);
   return (
     <TableRowStyle
       id={`row-${bboxIds}`}
       key={`row-${i}`}
-      onClick={() => setRowMenuOpen(`rowMenuOpen-${i}`)}
+      onClick={() => dispatch(tableOpenMenuRowUpdate({i: i, value: true}))}
       onBlur={() => {
-        if (!rowMenuHover) setRowMenuOpen('');
+        if (!rowMenuHover) dispatch(tableOpenMenuRowUpdate({i: i, value: false}));
       }}
       check={itemsChecked[i]}
     >
@@ -27,7 +29,6 @@ const TableRow = ({i, row, bboxIds}) => {
       })}
       <RowMenu
         i={i}
-        rowMenuOpen={rowMenuOpen}
         setRowMenuHover={setRowMenuHover}
       />
     </TableRowStyle>

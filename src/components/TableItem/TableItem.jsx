@@ -5,7 +5,7 @@ import {
     onItemFocus,
     onItemClick,
     renderItemValue,
-  } from '../Table/tableHelper';
+  } from './tableItemHelper';
   import { useDispatch } from 'react-redux';
   import { tableDataUpdate } from '../../redux/tableDataSlice';
 

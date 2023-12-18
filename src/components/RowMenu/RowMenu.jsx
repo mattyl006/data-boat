@@ -8,15 +8,18 @@ import {
   RowMenuRowStyle,
   RowMenuIconStyle,
 } from './RowMenuStyles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   tableItemsCheckedUpdate,
   tableDataAddNewRow,
   tableDataDeleteRow
 } from '../../redux/tableDataSlice';
 
-const RowMenu = ({ i, rowMenuOpen, setRowMenuHover }) => {
+const RowMenu = ({ i, setRowMenuHover }) => {
   const dispatch = useDispatch();
+  const rowMenuOpen = useSelector(
+    (state) => state.tableData.tableOpenMenuRow
+  );
   const [rowChecked, setRowChecked] = React.useState(false);
   const iconSize = '18px';
   const freeSpaces = '6px';
@@ -32,7 +35,7 @@ const RowMenu = ({ i, rowMenuOpen, setRowMenuHover }) => {
     dispatch(tableDataAddNewRow({ row: i }));
   };
 
-  if (rowMenuOpen === `rowMenuOpen-${i}`) {
+  if (rowMenuOpen[i]) {
     return (
       <RowMenuStyle
         freeSpaces={freeSpaces}

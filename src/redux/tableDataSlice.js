@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   tableData: [],
   tableItemsChecked: [],
+  tableOpenMenuRow: [],
 };
 
 export const tableDataSlice = createSlice({
@@ -12,7 +13,9 @@ export const tableDataSlice = createSlice({
     tableDataInit: (state, action) => {
       const data = action.payload;
       state.tableData = data;
-      state.tableItemsChecked = Array(data.length).fill(false);
+      const initBoolVector = Array(data.length).fill(false);
+      state.tableItemsChecked = initBoolVector;
+      state.tableOpenMenuRow = initBoolVector;
     },
     tableDataUpdate: (state, action) => {
       const { row, column, value } = action.payload;
@@ -41,6 +44,12 @@ export const tableDataSlice = createSlice({
       const { i, value } = action.payload;
       state.tableItemsChecked[i] = value;
     },
+    tableOpenMenuRowUpdate: (state, action) => {
+      const { i, value } = action.payload;
+      let tableOpenMenuRow = Array(state.tableData.length).fill(false);
+      tableOpenMenuRow[i] = value;
+      state.tableOpenMenuRow = tableOpenMenuRow;
+    },
   },
 });
 
@@ -50,6 +59,7 @@ export const {
   tableDataAddNewRow,
   tableDataDeleteRow,
   tableItemsCheckedUpdate,
+  tableOpenMenuRowUpdate,
 } = tableDataSlice.actions;
 
 export default tableDataSlice.reducer;
