@@ -10,7 +10,7 @@ import {
 } from './RowMenuStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  tableItemsCheckedUpdate,
+  tableRowsCheckedUpdate,
   tableDataAddNewRow,
   tableDataDeleteRow
 } from '../../redux/tableDataSlice';
@@ -20,6 +20,9 @@ const RowMenu = ({ i, setRowMenuHover }) => {
   const rowMenuOpen = useSelector(
     (state) => state.tableData.tableOpenMenuRow
   );
+  const rowsChecked = useSelector(
+    (state) => state.tableData.tableRowsChecked
+  );
   const [rowChecked, setRowChecked] = React.useState(false);
   const iconSize = '18px';
   const freeSpaces = '6px';
@@ -28,7 +31,7 @@ const RowMenu = ({ i, setRowMenuHover }) => {
     setRowChecked(!rowChecked);
     let value = true;
     if (rowChecked) value = false;
-    dispatch(tableItemsCheckedUpdate({ i: i, value: value }));
+    dispatch(tableRowsCheckedUpdate({ i: i, value: value }));
   };
 
   const addRowHandle = (i) => {
@@ -45,7 +48,7 @@ const RowMenu = ({ i, setRowMenuHover }) => {
         <RowMenuRowStyle freeSpaces={freeSpaces}>
           <RowMenuIconStyle
             iconSize={iconSize}
-            rowChecked={rowChecked}
+            rowChecked={rowsChecked[i]}
             src={checkIco}
             onClick={() => checkRowHandle(i)}
           />

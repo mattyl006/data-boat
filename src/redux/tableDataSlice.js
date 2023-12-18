@@ -2,8 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   tableData: [],
-  tableItemsChecked: [],
+  tableRowsChecked: [],
   tableOpenMenuRow: [],
+};
+
+const addValueToArray = (obj, value, index) => {
+  return [...obj.slice(0, index), value, ...obj.slice(index)];
 };
 
 export const tableDataSlice = createSlice({
@@ -14,7 +18,7 @@ export const tableDataSlice = createSlice({
       const data = action.payload;
       state.tableData = data;
       const initBoolVector = Array(data.length).fill(false);
-      state.tableItemsChecked = initBoolVector;
+      state.tableRowsChecked = initBoolVector;
       state.tableOpenMenuRow = initBoolVector;
     },
     tableDataUpdate: (state, action) => {
@@ -27,12 +31,20 @@ export const tableDataSlice = createSlice({
     tableDataAddNewRow: (state, action) => {
       const { row } = action.payload;
       const emptyRow = { '1st': [], '2nd': [], '3rd': [], '4th': [] };
-      const newTableData = [
-        ...state.tableData.slice(0, row),
-        emptyRow,
-        ...state.tableData.slice(row),
-      ];
+      const newTableData = addValueToArray(state.tableData, emptyRow, row);
+      const newTableRowsChecked = addValueToArray(
+        state.tableRowsChecked,
+        false,
+        row
+      );
+      const newTableOpenMenuRow = addValueToArray(
+        state.tableOpenMenuRow,
+        false,
+        row
+      );
       state.tableData = newTableData;
+      state.tableRowsChecked = newTableRowsChecked;
+      state.tableOpenMenuRow = newTableOpenMenuRow;
     },
     tableDataDeleteRow: (state, action) => {
       const { row } = action.payload;
@@ -40,9 +52,9 @@ export const tableDataSlice = createSlice({
       delete newTableData[row];
       state.tableData = newTableData;
     },
-    tableItemsCheckedUpdate: (state, action) => {
+    tableRowsCheckedUpdate: (state, action) => {
       const { i, value } = action.payload;
-      state.tableItemsChecked[i] = value;
+      state.tableRowsChecked[i] = value;
     },
     tableOpenMenuRowUpdate: (state, action) => {
       const { i, value } = action.payload;
@@ -58,7 +70,7 @@ export const {
   tableDataUpdate,
   tableDataAddNewRow,
   tableDataDeleteRow,
-  tableItemsCheckedUpdate,
+  tableRowsCheckedUpdate,
   tableOpenMenuRowUpdate,
 } = tableDataSlice.actions;
 

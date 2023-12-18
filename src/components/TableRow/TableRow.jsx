@@ -9,7 +9,7 @@ import { tableOpenMenuRowUpdate } from '../../redux/tableDataSlice';
 const TableRow = ({i, row, bboxIds}) => {
   const dispatch = useDispatch();
   const itemsChecked = useSelector(
-    (state) => state.tableData.tableItemsChecked
+    (state) => state.tableData.tableRowsChecked
   );
   const [rowMenuHover, setRowMenuHover] = React.useState(false);
   return (
