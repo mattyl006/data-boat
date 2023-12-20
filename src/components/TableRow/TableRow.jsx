@@ -4,12 +4,35 @@ import { useSelector } from 'react-redux';
 import RowMenu from '../RowMenu';
 import TableItem from '../TableItem';
 import { useDispatch } from 'react-redux';
-import { tableOpenMenuRowUpdate } from '../../redux/tableDataSlice';
+import {
+  tableOpenMenuRowUpdate,
+  tableRowsSwap,
+} from '../../redux/tableDataSlice';
 
-const TableRow = ({ i, row, bboxIds }) => {
+const TableRow = ({ i, row, bboxIds, tableRowDrop, setTableRowDrop}) => {
   const dispatch = useDispatch();
   const itemsChecked = useSelector((state) => state.tableData.tableRowsChecked);
   const [rowMenuHover, setRowMenuHover] = React.useState(false);
+  const [rowDraggable, setRowDraggable] = React.useState(false);
+
+  const handleOnDrag = (e, i, row) => {
+    setTableRowDrop({ row: row, index: i });
+  };
+
+  const handleOnDrop = (e, currentRowIndex) => {
+    if (tableRowDrop) {
+      const { row, index } = tableRowDrop;
+      dispatch(
+        tableRowsSwap({
+          droppedRow: row,
+          droppedRowIndex: index,
+          currentRowIndex: currentRowIndex,
+        })
+      );
+      setTableRowDrop(null)
+    }
+  };
+
   return (
     <TableRowStyle
       id={`row-${bboxIds}`}
@@ -20,6 +43,10 @@ const TableRow = ({ i, row, bboxIds }) => {
           dispatch(tableOpenMenuRowUpdate({ i: i, value: false }));
       }}
       check={itemsChecked[i]}
+      draggable={rowDraggable}
+      onDragStart={(e) => handleOnDrag(e, i, row)}
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={(e) => handleOnDrop(e, i)}
     >
       {Object.entries(row).map((item, j) => {
         return (
@@ -32,7 +59,11 @@ const TableRow = ({ i, row, bboxIds }) => {
           />
         );
       })}
-      <RowMenu i={i} setRowMenuHover={setRowMenuHover} />
+      <RowMenu
+        i={i}
+        setRowMenuHover={setRowMenuHover}
+        setRowDraggable={setRowDraggable}
+      />
     </TableRowStyle>
   );
 };

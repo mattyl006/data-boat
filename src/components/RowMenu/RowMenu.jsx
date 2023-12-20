@@ -15,7 +15,7 @@ import {
   tableDataDeleteRow
 } from '../../redux/tableDataSlice';
 
-const RowMenu = ({ i, setRowMenuHover }) => {
+const RowMenu = ({ i, setRowMenuHover, setRowDraggable }) => {
   const dispatch = useDispatch();
   const rowMenuOpen = useSelector(
     (state) => state.tableData.tableOpenMenuRow
@@ -59,7 +59,7 @@ const RowMenu = ({ i, setRowMenuHover }) => {
           />
         </RowMenuRowStyle>
         <RowMenuRowStyle freeSpaces={freeSpaces}>
-          <RowMenuIconStyle iconSize={iconSize} src={dragRowIco} />
+          <RowMenuIconStyle iconSize={iconSize} src={dragRowIco} onMouseEnter={() => setRowDraggable(true)} onMouseLeave={() => setRowDraggable(false)} />
           <RowMenuIconStyle iconSize={iconSize} src={removeRowIco} onClick={() => dispatch(tableDataDeleteRow({row: i}))} />
         </RowMenuRowStyle>
       </RowMenuStyle>

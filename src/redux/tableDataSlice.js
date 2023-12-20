@@ -75,6 +75,35 @@ export const tableDataSlice = createSlice({
       tableOpenMenuRow[i] = value;
       state.tableOpenMenuRow = tableOpenMenuRow;
     },
+    tableRowsSwap: (state, action) => {
+      const { droppedRow, droppedRowIndex, currentRowIndex } = action.payload;
+      console.log(action.payload);
+      const droppendTableRowChecked = state.tableRowsChecked[droppedRowIndex];
+      let newTableData = removeValueFromArray(state.tableData, droppedRowIndex);
+      let newTableRowsChecked = removeValueFromArray(
+        state.tableRowsChecked,
+        droppedRowIndex
+      );
+      let newTableOpenMenuRow = removeValueFromArray(
+        state.tableOpenMenuRow,
+        droppedRowIndex
+      );
+      newTableData = addValueToArray(newTableData, droppedRow, currentRowIndex);
+      newTableRowsChecked = addValueToArray(
+        newTableRowsChecked,
+        droppendTableRowChecked,
+        currentRowIndex
+      );
+      newTableOpenMenuRow = addValueToArray(
+        newTableOpenMenuRow,
+        false,
+        currentRowIndex
+      );
+      state.tableData = newTableData;
+      state.tableRowsChecked = newTableRowsChecked;
+      state.tableOpenMenuRow = newTableOpenMenuRow;
+      console.log(state.tableData);
+    },
   },
 });
 
@@ -85,6 +114,7 @@ export const {
   tableDataDeleteRow,
   tableRowsCheckedUpdate,
   tableOpenMenuRowUpdate,
+  tableRowsSwap,
 } = tableDataSlice.actions;
 
 export default tableDataSlice.reducer;

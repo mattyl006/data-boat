@@ -8,6 +8,8 @@ import TableRow from '../TableRow/TableRow';
 const Table = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.tableData.tableData);
+  const [tableRowDrop, setTableRowDrop] = React.useState(null);
+
   return (
     <TableStyle>
       {items.map((row, i) => {
@@ -15,7 +17,15 @@ const Table = () => {
           (item) => '' + Object.values(item)?.map((bbox) => bbox.id + '')
         );
         dispatch(addRowId(bboxIds));
-        return <TableRow i={i} row={row} bboxIds={bboxIds} />;
+        return (
+          <TableRow
+            i={i}
+            row={row}
+            tableRowDrop={tableRowDrop}
+            setTableRowDrop={setTableRowDrop}
+            bboxIds={bboxIds}
+          />
+        );
       })}
     </TableStyle>
   );
