@@ -8,7 +8,7 @@ import { tableDataInit } from '../../redux/tableDataSlice';
 import getPackage from '../../api/getPackage';
 import { packagesInit } from '../../redux/packagesSlice';
 
-const Formatter = ({ pdfProcessingResult }) => {
+const Formatter = ({ pdfProcessingResult, fileName }) => {
   const [pdfData, setPdfData] = React.useState([]);
   const [images, setImages] = React.useState([]);
   const [imageBboxes, setImageBboxes] = React.useState([]);
@@ -63,7 +63,7 @@ const Formatter = ({ pdfProcessingResult }) => {
   return (
     <FormatterStyle>
       <Source images={images} imageBboxes={imageBboxes} />
-      <Target />
+      <Target fileName={fileName} />
     </FormatterStyle>
   );
 };

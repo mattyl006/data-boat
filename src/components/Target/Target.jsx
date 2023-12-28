@@ -11,7 +11,7 @@ import TargetStyle from './TargetStyle';
 import { useSelector } from 'react-redux';
 import { downloadTable } from './targetHelper';
 
-const Target = () => {
+const Target = ({fileName}) => {
   const [objUrl, setObjUrl] = React.useState(null);
   const tableData = useSelector((state) => state.tableData.tableData);
 
@@ -23,7 +23,7 @@ const Target = () => {
       src: downloadIco,
       as: 'a',
       href: objUrl,
-      download: 'test.xlsx',
+      download: `${fileName?.split('.')[0]}.xlsx`,
       handler: () => downloadTable(tableData, setObjUrl),
       disabled: false,
     },
@@ -32,7 +32,7 @@ const Target = () => {
   if (tableData?.length) {
     return (
       <>
-        <Menu icons={icons} paging />
+        <Menu icons={icons} />
         <TargetStyle>
           <Table />
         </TargetStyle>

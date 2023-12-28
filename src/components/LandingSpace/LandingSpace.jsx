@@ -7,7 +7,11 @@ import fileImage from '../../assets/file.png';
 import processPdf from '../../api/processPdf';
 import LandingSpaceStyle from './LandingSpaceStyle';
 
-const LandingSpace = ({ setOpenFormatter, setPdfProcessingResult }) => {
+const LandingSpace = ({
+  setOpenFormatter,
+  setPdfProcessingResult,
+  setFileName,
+}) => {
   const id = 'documentInput';
   return (
     <LandingSpaceStyle>
@@ -28,7 +32,7 @@ const LandingSpace = ({ setOpenFormatter, setPdfProcessingResult }) => {
           type="file"
           accept="application/pdf"
           onChange={(e) => {
-            processPdf(e, setPdfProcessingResult);
+            processPdf(e, setPdfProcessingResult, setFileName);
             setOpenFormatter(true);
           }}
         />

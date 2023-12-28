@@ -1,6 +1,6 @@
 import { API } from '../utils/globals';
 
-const processPdf = (e, setResult) => {
+const processPdf = (e, setResult, setFileName) => {
   const file = e.target.files[0];
   const formData = new FormData();
   formData.append('pdf_file', file);
@@ -27,6 +27,7 @@ const processPdf = (e, setResult) => {
       console.log('json response processing');
       console.log(json);
       setResult(json);
+      setFileName(file.name);
     });
 };
 
