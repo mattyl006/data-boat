@@ -36,12 +36,16 @@ const Source = ({ images, imageBboxes }) => {
     if (findedItemId) {
       if (selectedTableItem) {
         const element = document.getElementById(`bboxes-${selectedTableItem}`);
-        element.classList.remove('tableItemFocus');
+        if (element) {
+          element.classList.remove('tableItemFocus');
+        }
       }
       setSelectedTableItem(findedItemId);
       const element = document.getElementById(`bboxes-${findedItemId}`);
-      element.classList.add('tableItemFocus');
-      element.scrollIntoView({ behavior: 'smooth' });
+      if (element) {
+        element.classList.add('tableItemFocus');
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 

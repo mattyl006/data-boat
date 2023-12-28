@@ -63,7 +63,7 @@ const Formatter = ({ pdfProcessingResult, fileName }) => {
   return (
     <FormatterStyle>
       <Source images={images} imageBboxes={imageBboxes} />
-      <Target fileName={fileName} />
+      <Target fileName={fileName} pdfProcessingResult={pdfProcessingResult} />
     </FormatterStyle>
   );
 };
