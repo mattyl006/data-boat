@@ -3,24 +3,45 @@ import Source from '../Source/Source';
 import Target from '../Target/Target';
 import FormatterStyle from './FormatterStyle';
 import getData from '../../api/getData';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { tableDataInit } from '../../redux/tableDataSlice';
+import getPackage from '../../api/getPackage';
+import { packagesInit } from '../../redux/packagesSlice';
 
 const Formatter = ({ pdfProcessingResult }) => {
   const [pdfData, setPdfData] = React.useState([]);
   const [images, setImages] = React.useState([]);
   const [imageBboxes, setImageBboxes] = React.useState([]);
   const [initialTableData, setInitialTableData] = React.useState([]);
+  const [pdfPackageResult, setPdfPackageResult] = React.useState(null);
+  const page = useSelector((state) => state.packages.page);
   const dispatch = useDispatch();
-
-  console.log(pdfData);
 
   React.useEffect(() => {
     if (pdfProcessingResult?.length) {
-      getData(pdfProcessingResult[0].pdf_url, setPdfData);
-      getData(pdfProcessingResult[0].table_url, setInitialTableData);
+      if (pdfProcessingResult[0].packages) {
+        getPackage(0, setPdfPackageResult);
+        dispatch(packagesInit(pdfProcessingResult[0].packages));
+      } else {
+        getData(pdfProcessingResult[0].pdf_url, setPdfData);
+        getData(pdfProcessingResult[0].table_url, setInitialTableData);
+      }
     }
-  }, [pdfProcessingResult]);
+  }, [dispatch, pdfProcessingResult]);
+
+  React.useEffect(() => {
+    if (page) {
+      setPdfPackageResult(null);
+      getPackage(page - 1, setPdfPackageResult);
+    }
+  }, [page]);
+
+  React.useEffect(() => {
+    if (pdfPackageResult?.length) {
+      getData(pdfPackageResult[0].pdf_url, setPdfData);
+      getData(pdfPackageResult[0].table_url, setInitialTableData);
+    }
+  }, [pdfPackageResult]);
 
   React.useEffect(() => {
     dispatch(tableDataInit(Object.values(initialTableData)));
@@ -42,7 +63,7 @@ const Formatter = ({ pdfProcessingResult }) => {
   return (
     <FormatterStyle>
       <Source images={images} imageBboxes={imageBboxes} />
-      <Target tableData={Object.values(initialTableData)} />
+      <Target />
     </FormatterStyle>
   );
 };

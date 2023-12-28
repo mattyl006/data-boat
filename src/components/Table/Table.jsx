@@ -10,6 +10,8 @@ const Table = () => {
   const items = useSelector((state) => state.tableData.tableData);
   const [tableRowDrop, setTableRowDrop] = React.useState(null);
 
+  console.log(items);
+
   return (
     <TableStyle>
       {items.map((row, i) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Svg } from '../../utils/containers';
 import theme from '../../utils/theme';
 import MenuStyle from './MenuStyle';
+import Pager from '../Pager/Pager';
 
 const Menu = ({ icons }) => {
   return (
@@ -24,6 +25,7 @@ const Menu = ({ icons }) => {
           />
         );
       })}
+      <Pager />
     </MenuStyle>
   );
 };

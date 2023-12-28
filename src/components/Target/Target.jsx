@@ -32,13 +32,14 @@ const Target = () => {
   if (tableData?.length) {
     return (
       <>
-        <Menu icons={icons} />
+        <Menu icons={icons} paging />
         <TargetStyle>
           <Table />
         </TargetStyle>
       </>
     );
   }
+  
   return (
     <>
       <Menu icons={icons} />
