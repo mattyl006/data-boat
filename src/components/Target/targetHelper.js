@@ -20,7 +20,10 @@ const downloadTable = (tableData, setObjUrl) => {
     const rowA = getRow(row, '1st');
     const rowB = getRow(row, '2nd');
     const rowC = getRow(row, '3rd');
-    const rowD = getRow(row, '4th');
+    let rowD = getRow(row, '4th');
+    if (rowD.length > 32000) {
+      rowD = rowD.slice(0, 32000);
+    }
     tsvContent += `${rowA}\t${rowB}\t${rowC}\t${rowD}\n`;
   });
   const wb = read(tsvContent.split(',').join('","'), {
