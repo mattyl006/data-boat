@@ -1,6 +1,6 @@
 const ELEMENTS_PER_PAGE = 20;
-//const API = 'http://karida-gpu.vm.wmi.amu.edu.pl:8000';
-const API = 'http://127.0.0.1:8000';
+const API = 'http://karida-gpu.vm.wmi.amu.edu.pl:8000';
+//const API = 'http://127.0.0.1:8000';
 
 const IS_MOBILE = () => {
   return document.body.clientWidth <= 768;
