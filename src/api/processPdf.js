@@ -1,10 +1,12 @@
 import { API } from '../utils/globals';
 
+import { APIToken } from '../utils/globals';
+
 const processPdf = (e, setResult, setFileName) => {
   const file = e.target.files[0];
   const formData = new FormData();
   formData.append('pdf_file', file);
-  fetch(`${API}/process-pdf/`, {
+  fetch(`${API}/process-pdf/?token=${APIToken}`, {
     method: 'post',
     body: formData,
   })
