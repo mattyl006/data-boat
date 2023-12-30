@@ -1,3 +1,6 @@
+import { AuthProvider } from './AuthContext';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import LoginPage from './pages/LoginPage';
 import { ThemeProvider } from 'styled-components';
 import theme from './utils/theme';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -10,32 +13,39 @@ const App = () => {
   const [openFormatter, setOpenFormatter] = React.useState(false);
 
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <NavBar setOpenFormatter={setOpenFormatter} />
-        <Routes>
-          <Route
-            path="/next-page"
-            element={
-              <NextPage
-                openFormatter={openFormatter}
-                setOpenFormatter={setOpenFormatter}
+    <AuthProvider>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <NavBar setOpenFormatter={setOpenFormatter} />
+            <Routes>
+              <Route
+                path="/next-page"
+                element={
+                <ProtectedRoute>
+                  <NextPage
+                    openFormatter={openFormatter}
+                    setOpenFormatter={setOpenFormatter}
+                  />
+                </ProtectedRoute>
+                }
               />
-            }
-          />
-          <Route
-            exact
-            path="/"
-            element={
-              <StartPage
-                openFormatter={openFormatter}
-                setOpenFormatter={setOpenFormatter}
+              <Route
+                exact
+                path="/"
+                element={
+                <ProtectedRoute>
+                  <StartPage
+                    openFormatter={openFormatter}
+                    setOpenFormatter={setOpenFormatter}
+                  />
+                </ProtectedRoute>
+                }
               />
-            }
-          />
-        </Routes>
-      </ThemeProvider>
-    </BrowserRouter>
+              <Route exact path="/login" element={<LoginPage />} />
+            </Routes>
+          </ThemeProvider>
+        </BrowserRouter>
+    </AuthProvider>
   );
 };
 
