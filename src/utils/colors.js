@@ -7,6 +7,7 @@ const colors = {
   greenLight: 'hsla(158, 100%, 92%, 1)',
   greenStrong: 'hsla(158, 100%, 41%, 1)',
   gray: 'rgba(110, 109, 137, 1)',
+  blackTrans: 'rgba(24, 24, 38, 0.5)',
 };
 
 export default colors;
