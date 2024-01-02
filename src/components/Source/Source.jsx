@@ -10,11 +10,13 @@ import {
   BboxTextStyle,
 } from './SourceStyles';
 import { API } from '../../utils/globals';
+import { APIToken } from '../../utils/globals';
 import Menu from '../Menu';
 import { useSelector } from 'react-redux';
 import resetIco from '../../assets/reset.svg';
 import zoomInIco from '../../assets/zoomIn.svg';
 import zoomOutIco from '../../assets/zoomOut.svg';
+
 
 const Source = ({ images, imageBboxes }) => {
   const imagesLength = images?.length;
@@ -77,7 +79,7 @@ const Source = ({ images, imageBboxes }) => {
                 </BboxStyle>
               );
             })}
-            <SourceImg src={`${API}${image.url}`} alt="" />
+            <SourceImg src={`${API}${image.url}?token=${APIToken}`} alt="" />
           </SourceImgContainerStyle>
         );
       });

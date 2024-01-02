@@ -1,7 +1,8 @@
 import { API } from '../utils/globals';
+import { APIToken } from '../utils/globals';
 
 const getData = (file, setResult) => {
-  fetch(`${API}/static/files/${file}`, {
+  fetch(`${API}/static/files/${file}?token=${APIToken}`, {
     method: 'get',
   })
     .then(
