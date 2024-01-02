@@ -1,5 +1,5 @@
-import { AuthProvider } from './AuthContext';
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+// import { AuthProvider } from './AuthContext';
+// import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import { ThemeProvider } from 'styled-components';
 import theme from './utils/theme';
@@ -8,12 +8,13 @@ import React from 'react';
 import NextPage from './pages/NextPage';
 import StartPage from './pages/StartPage';
 import NavBar from './components/Navbar';
+import { useSelector } from 'react-redux';
 
 const App = () => {
   const [openFormatter, setOpenFormatter] = React.useState(false);
+  const token = useSelector((state) => state.authorize.token);
 
   return (
-    <AuthProvider>
         <BrowserRouter>
           <ThemeProvider theme={theme}>
             <NavBar setOpenFormatter={setOpenFormatter} />
@@ -21,31 +22,25 @@ const App = () => {
               <Route
                 path="/next-page"
                 element={
-                <ProtectedRoute>
                   <NextPage
                     openFormatter={openFormatter}
                     setOpenFormatter={setOpenFormatter}
                   />
-                </ProtectedRoute>
                 }
               />
-              <Route
+              {token === "" ?  <Route exact path="/" element={<LoginPage />} /> : <Route
                 exact
                 path="/"
                 element={
-                <ProtectedRoute>
                   <StartPage
                     openFormatter={openFormatter}
                     setOpenFormatter={setOpenFormatter}
                   />
-                </ProtectedRoute>
                 }
-              />
-              <Route exact path="/login" element={<LoginPage />} />
+              />}
             </Routes>
           </ThemeProvider>
         </BrowserRouter>
-    </AuthProvider>
   );
 };
 

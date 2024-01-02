@@ -6,12 +6,8 @@ const format = (text) => {
 
 const getRow = (row, col) => {
   const textValue = row[col][0]?.textValue;
-  if (textValue) {
-    return format(textValue);
-  }
-  return Object.values(row[col])
-    .map((bbox) => format(bbox.text))
-    .join(' ');
+  if (textValue) return format(textValue);
+  return '';
 };
 
 const downloadTable = (tableData, setObjUrl) => {

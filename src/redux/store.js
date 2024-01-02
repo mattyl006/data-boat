@@ -3,6 +3,7 @@ import bboxesSlice from './bboxesSlice';
 import rowIdsSlice from './rowIdsSlice';
 import tableDataSlice from './tableDataSlice';
 import packagesSlice from './packagesSlice';
+import authorizeSlice from './authorizeSlice';
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     rowIds: rowIdsSlice,
     tableData: tableDataSlice,
     packages: packagesSlice,
+    authorize: authorizeSlice,
   },
 });

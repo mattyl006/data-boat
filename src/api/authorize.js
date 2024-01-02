@@ -1,14 +1,13 @@
 import { API } from '../utils/globals';
-// import { APIToken } from '../utils/globals';
 
-const getData = (file, setResult, APIToken) => {
-  fetch(`${API}/static/files/${file}?token=${APIToken}`, {
+const authorize = async (username, hash, setResult) => {
+  fetch(`${API}/authorize/${username}/${hash}`, {
     method: 'get',
   })
     .then(
       (res) => {
         if (res.ok) {
-          console.log('getting data ok');
+          console.log('authorize salt ok');
           return res.json();
         } else {
           console.log('something went wrong');
@@ -21,10 +20,11 @@ const getData = (file, setResult, APIToken) => {
       }
     )
     .then((json) => {
-      console.log('json response processing');
+      console.log('json SDSFASDASDASDA response processing');
       console.log(json);
-      setResult(json);
+      setResult(json.token);
     });
 };
+// pusty string jak cos bedzie nie tak
 
-export default getData;
+export default authorize;

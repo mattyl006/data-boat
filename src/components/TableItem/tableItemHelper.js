@@ -1,12 +1,3 @@
-const renderItemValue = (itemValue) => {
-  if (itemValue[0]?.textValue) {
-    return itemValue[0].textValue;
-  }
-  return itemValue?.map((bbox) => {
-    return bbox.text + ' ';
-  });
-};
-
 const onItemBlur = (selectedBboxes, setScrollPage) => {
   if (selectedBboxes?.length) {
     selectedBboxes.forEach((id) => {
@@ -46,4 +37,4 @@ const onItemClick = (itemValue, scrollPage, setScrollPage) => {
   }
 };
 
-export { renderItemValue, onItemBlur, onItemFocus, onItemClick };
+export { onItemBlur, onItemFocus, onItemClick };

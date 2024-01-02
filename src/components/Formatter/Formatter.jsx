@@ -15,6 +15,7 @@ const Formatter = ({ pdfProcessingResult, fileName }) => {
   const [initialTableData, setInitialTableData] = React.useState([]);
   const [pdfPackageResult, setPdfPackageResult] = React.useState(null);
   const page = useSelector((state) => state.packages.page);
+  const token = useSelector((state) => state.authorize.token);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -23,11 +24,11 @@ const Formatter = ({ pdfProcessingResult, fileName }) => {
         getPackage(0, setPdfPackageResult);
         dispatch(packagesInit(pdfProcessingResult[0].packages));
       } else {
-        getData(pdfProcessingResult[0].pdf_url, setPdfData);
-        getData(pdfProcessingResult[0].table_url, setInitialTableData);
+        getData(pdfProcessingResult[0].pdf_url, setPdfData, token);
+        getData(pdfProcessingResult[0].table_url, setInitialTableData, token);
       }
     }
-  }, [dispatch, pdfProcessingResult]);
+  }, [dispatch, pdfProcessingResult, token]);
 
   React.useEffect(() => {
     if (page) {
@@ -38,10 +39,10 @@ const Formatter = ({ pdfProcessingResult, fileName }) => {
 
   React.useEffect(() => {
     if (pdfPackageResult?.length) {
-      getData(pdfPackageResult[0].pdf_url, setPdfData);
-      getData(pdfPackageResult[0].table_url, setInitialTableData);
+      getData(pdfPackageResult[0].pdf_url, setPdfData, token);
+      getData(pdfPackageResult[0].table_url, setInitialTableData, token);
     }
-  }, [pdfPackageResult]);
+  }, [pdfPackageResult, token]);
 
   React.useEffect(() => {
     dispatch(tableDataInit(Object.values(initialTableData)));

@@ -19,7 +19,19 @@ export const tableDataSlice = createSlice({
   initialState,
   reducers: {
     tableDataInit: (state, action) => {
-      const data = action.payload;
+      let data = action.payload;
+      action.payload.forEach((row, rowIndex) => {
+        Object.keys(row).forEach((col) => {
+          if (action.payload[rowIndex]) {
+            data[rowIndex][col][0] = {
+              ...action.payload[rowIndex][col][0],
+              textValue: action.payload[rowIndex][col]
+                .map((item) => item.text + ' ')
+                .join(''),
+            };
+          }
+        });
+      });
       state.tableData = data;
       const initBoolVector = Array(data.length).fill(false);
       state.tableRowsChecked = initBoolVector;

@@ -6,6 +6,7 @@ import shipImage from '../../assets/ship.png';
 import fileImage from '../../assets/file.png';
 import processPdf from '../../api/processPdf';
 import LandingSpaceStyle from './LandingSpaceStyle';
+import { useSelector } from 'react-redux';
 
 const LandingSpace = ({
   setOpenFormatter,
@@ -13,6 +14,8 @@ const LandingSpace = ({
   setFileName,
 }) => {
   const id = 'documentInput';
+  const token = useSelector((state) => state.authorize.token);
+  console.log(token);
   return (
     <LandingSpaceStyle>
       <H1 margin="0 0 20px 0" color={theme.colors.white}>
@@ -32,7 +35,7 @@ const LandingSpace = ({
           type="file"
           accept="application/pdf"
           onChange={(e) => {
-            processPdf(e, setPdfProcessingResult, setFileName);
+            processPdf(e, setPdfProcessingResult, setFileName, token);
             setOpenFormatter(true);
           }}
         />

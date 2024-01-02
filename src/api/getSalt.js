@@ -1,14 +1,13 @@
 import { API } from '../utils/globals';
-// import { APIToken } from '../utils/globals';
 
-const getData = (file, setResult, APIToken) => {
-  fetch(`${API}/static/files/${file}?token=${APIToken}`, {
+const getSalt = async (username, setResult) => {
+  fetch(`${API}/get-salt/${username}`, {
     method: 'get',
   })
     .then(
       (res) => {
         if (res.ok) {
-          console.log('getting data ok');
+          console.log('getting salt ok');
           return res.json();
         } else {
           console.log('something went wrong');
@@ -23,8 +22,8 @@ const getData = (file, setResult, APIToken) => {
     .then((json) => {
       console.log('json response processing');
       console.log(json);
-      setResult(json);
+      setResult(json.salt);
     });
 };
 
-export default getData;
+export default getSalt;

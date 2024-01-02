@@ -10,7 +10,6 @@ import {
   BboxTextStyle,
 } from './SourceStyles';
 import { API } from '../../utils/globals';
-import { APIToken } from '../../utils/globals';
 import Menu from '../Menu';
 import { useSelector } from 'react-redux';
 import resetIco from '../../assets/reset.svg';
@@ -25,6 +24,7 @@ const Source = ({ images, imageBboxes }) => {
     imagesLength && imageBboxesLength && imagesLength === imageBboxesLength;
   const tableRowIds = useSelector((state) => state.rowIds.rowIds);
   const [selectedTableItem, setSelectedTableItem] = React.useState(null);
+  const token = useSelector((state) => state.authorize.token);
 
   const findTableRow = (bboxId) => {
     let findedItemId = null;
@@ -79,7 +79,7 @@ const Source = ({ images, imageBboxes }) => {
                 </BboxStyle>
               );
             })}
-            <SourceImg src={`${API}${image.url}?token=${APIToken}`} alt="" />
+            <SourceImg src={`${API}${image.url}?token=${token}`} alt="" />
           </SourceImgContainerStyle>
         );
       });
