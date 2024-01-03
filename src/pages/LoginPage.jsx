@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useAuth } from '../AuthContext'; // Update with the correct path
 import { useNavigate } from 'react-router-dom';
 import {H1} from "../utils/fonts";
 import theme from "../utils/theme";
 import LandingSpaceStyle from "../components/LandingSpace/LandingSpaceStyle";
 import getSalt from '../api/getSalt';
 import authorize from '../api/authorize';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import CryptoJS from 'crypto-js';
 import { setToken } from '../redux/authorizeSlice';
 

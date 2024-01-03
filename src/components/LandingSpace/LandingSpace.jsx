@@ -15,7 +15,6 @@ const LandingSpace = ({
 }) => {
   const id = 'documentInput';
   const token = useSelector((state) => state.authorize.token);
-  console.log(token);
   return (
     <LandingSpaceStyle>
       <H1 margin="0 0 20px 0" color={theme.colors.white}>

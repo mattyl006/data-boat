@@ -8,15 +8,12 @@ import zoomInIco from '../../assets/zoomIn.svg';
 import zoomOutIco from '../../assets/zoomOut.svg';
 import downloadIco from '../../assets/download.svg';
 import TargetStyle from './TargetStyle';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { downloadTable } from './targetHelper';
-import getData from '../../api/getData';
 
-const Target = ({fileName, pdfProcessingResult}) => {
+const Target = ({fileName}) => {
   const [objUrl, setObjUrl] = React.useState(null);
   const tableData = useSelector((state) => state.tableData.tableData);
-  const [resultTableData, setResultTableData] = React.useState(null);
-  const dispatch = useDispatch();
 
   // const exportResult = () => {
   //   getData(pdfProcessingResult[0].table_url, setResultTableData);

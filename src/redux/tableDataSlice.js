@@ -4,6 +4,7 @@ const initialState = {
   tableData: [],
   tableRowsChecked: [],
   tableOpenMenuRow: [],
+  tableModifyEventWas: false,
 };
 
 const addValueToArray = (obj, value, index) => {
@@ -46,7 +47,12 @@ export const tableDataSlice = createSlice({
     },
     tableDataAddNewRow: (state, action) => {
       const { row } = action.payload;
-      const emptyRow = { '1st': [], '2nd': [], '3rd': [], '4th': [] };
+      const emptyRow = {
+        '1st': [{ textValue: '' }],
+        '2nd': [{ textValue: '' }],
+        '3rd': [{ textValue: '' }],
+        '4th': [{ textValue: '' }],
+      };
       const newTableData = addValueToArray(state.tableData, emptyRow, row);
       const newTableRowsChecked = addValueToArray(
         state.tableRowsChecked,
@@ -61,6 +67,7 @@ export const tableDataSlice = createSlice({
       state.tableData = newTableData;
       state.tableRowsChecked = newTableRowsChecked;
       state.tableOpenMenuRow = newTableOpenMenuRow;
+      state.tableModifyEventWas = true;
     },
     tableDataDeleteRow: (state, action) => {
       const { row } = action.payload;
@@ -76,6 +83,7 @@ export const tableDataSlice = createSlice({
       state.tableData = newTableData;
       state.tableRowsChecked = newTableRowsChecked;
       state.tableOpenMenuRow = newTableOpenMenuRow;
+      state.tableModifyEventWas = true;
     },
     tableRowsCheckedUpdate: (state, action) => {
       const { i, value } = action.payload;
@@ -89,7 +97,6 @@ export const tableDataSlice = createSlice({
     },
     tableRowsSwap: (state, action) => {
       const { droppedRow, droppedRowIndex, currentRowIndex } = action.payload;
-      console.log(action.payload);
       const droppendTableRowChecked = state.tableRowsChecked[droppedRowIndex];
       let newTableData = removeValueFromArray(state.tableData, droppedRowIndex);
       let newTableRowsChecked = removeValueFromArray(
@@ -114,7 +121,10 @@ export const tableDataSlice = createSlice({
       state.tableData = newTableData;
       state.tableRowsChecked = newTableRowsChecked;
       state.tableOpenMenuRow = newTableOpenMenuRow;
-      console.log(state.tableData);
+      state.tableModifyEventWas = true;
+    },
+    setTableModifyEventWas: (state, action) => {
+      state.tableModifyEventWas = action.payload;
     },
   },
 });
@@ -127,6 +137,7 @@ export const {
   tableRowsCheckedUpdate,
   tableOpenMenuRowUpdate,
   tableRowsSwap,
+  setTableModifyEventWas,
 } = tableDataSlice.actions;
 
 export default tableDataSlice.reducer;

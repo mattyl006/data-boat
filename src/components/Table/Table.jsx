@@ -9,8 +9,13 @@ const Table = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.tableData.tableData);
   const [tableRowDrop, setTableRowDrop] = React.useState(null);
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
 
-  console.log(items);
+  React.useEffect(() => {
+    console.log("update");
+    forceUpdate();
+  }, [forceUpdate, items])
 
   return (
     <TableStyle>

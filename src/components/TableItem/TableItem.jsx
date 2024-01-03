@@ -1,8 +1,8 @@
 import React from 'react';
 import TableItemStyle from './TableItemStyle';
 import { onItemBlur, onItemFocus, onItemClick } from './tableItemHelper';
-import { useDispatch } from 'react-redux';
-import { tableDataUpdate } from '../../redux/tableDataSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { tableDataUpdate, setTableModifyEventWas } from '../../redux/tableDataSlice';
 import Loading from '../Loading';
 import { createPortal } from 'react-dom';
 import { FlexColumn } from '../../utils/containers';
@@ -10,6 +10,7 @@ import theme from '../../utils/theme';
 
 const TableItem = ({ i, j, item, bboxIds }) => {
   const dispatch = useDispatch();
+  const tableModifyEventWas = useSelector((state) => state.tableData.tableModifyEventWas);
   const [selectedBboxes, setSelectedBboxes] = React.useState([]);
   const [scrollPage, setScrollPage] = React.useState(0);
   const itemKey = item[0];
@@ -19,10 +20,15 @@ const TableItem = ({ i, j, item, bboxIds }) => {
   );
   const [updateLoading, setUpdateLoading] = React.useState(false);
 
-  console.log(valueToUpdate === itemValue[0].textValue);
+  React.useEffect(() => {
+    if (valueToUpdate !== itemValue[0]?.textValue && tableModifyEventWas) {
+      setValueToUpdate(itemValue[0]?.textValue ? itemValue[0].textValue : '');
+      dispatch(setTableModifyEventWas(false))
+    }
+  }, [dispatch, itemValue, tableModifyEventWas, valueToUpdate])
 
   React.useEffect(() => {
-    if (valueToUpdate === itemValue[0].textValue) {
+    if (valueToUpdate === itemValue[0]?.textValue) {
       setUpdateLoading(false);
     }
   }, [itemValue, valueToUpdate]);

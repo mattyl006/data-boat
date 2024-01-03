@@ -14,7 +14,6 @@ export const packagesSlice = createSlice({
       state.page = 1;
     },
     increasePage: (state) => {
-      console.log(state.packages.length);
       if (state.page < state.packages) {
         state.page = state.page + 1;
       }
