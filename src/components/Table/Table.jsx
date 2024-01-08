@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import TableRow from '../TableRow/TableRow';
 import DraggableTableRow from '../DraggableTableRow';
 import { tableRowsSwap } from '../../redux/tableDataSlice';
+import EntireScreenLoading from '../EntireScreenLoading';
+import { TIMEOUT_VALUE } from '../../utils/globals';
 
 const Table = () => {
   const dispatch = useDispatch();
@@ -13,32 +15,52 @@ const Table = () => {
   const [tableRowDrop, setTableRowDrop] = React.useState(null);
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
+  const [dragLoading, setDragLoading] = React.useState(false);
+  const [dropLoading, setDropLoading] = React.useState(false);
 
   React.useEffect(() => {
     forceUpdate();
   }, [forceUpdate, items]);
 
-  const handleOnDrag = (row, index) => {
-    setTableRowDrop({ row: row, index: index });
+  React.useEffect(() => {
+    if (tableRowDrop === null) {
+      setDropLoading(false);
+    }
+  }, [tableRowDrop]);
+
+  const handleOnDrag = (e, row, index) => {
+    setDragLoading(true);
+    setTimeout(() => {
+      setTableRowDrop({ event: e, row: row, index: index });
+    }, TIMEOUT_VALUE);
   };
 
   const handleOnDrop = (currentRowIndex) => {
     if (tableRowDrop) {
+      setDropLoading(true);
       const { row, index } = tableRowDrop;
-      dispatch(
-        tableRowsSwap({
-          droppedRow: row,
-          droppedRowIndex: index,
-          currentRowIndex: currentRowIndex,
-        })
-      );
-      setTableRowDrop(null);
+      setTimeout(() => {
+        dispatch(
+          tableRowsSwap({
+            droppedRow: row,
+            droppedRowIndex: index,
+            currentRowIndex: currentRowIndex,
+          })
+        );
+        setTableRowDrop(null);
+      }, TIMEOUT_VALUE)
     }
   };
 
   const draggableTableRowRender = () => {
     if (tableRowDrop) {
-      return <DraggableTableRow i={tableRowDrop.index} />;
+      return (
+        <DraggableTableRow
+          i={tableRowDrop.index}
+          setDragLoading={setDragLoading}
+          event={tableRowDrop.event}
+        />
+      );
     }
   };
 
@@ -62,6 +84,7 @@ const Table = () => {
         })}
       </TableStyle>
       {draggableTableRowRender()}
+      {(dragLoading || dropLoading) && <EntireScreenLoading />}
     </>
   );
 };

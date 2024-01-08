@@ -63,7 +63,7 @@ const RowMenu = ({ i, setRowMenuHover, handleOnDrag, setTableLoading }) => {
           <RowMenuIconStyle
             iconSize={iconSize}
             src={dragRowIco}
-            onClick={() => handleOnDrag()}
+            onClick={(e) => handleOnDrag(e)}
           />
           <RowMenuIconStyle
             iconSize={iconSize}

@@ -52,7 +52,7 @@ const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
       <RowMenu
         i={i}
         setRowMenuHover={setRowMenuHover}
-        handleOnDrag={() => handleOnDrag(row, i)}
+        handleOnDrag={(e) => handleOnDrag(e, row, i)}
         setTableLoading={setTableLoading}
       />
     </TableRowStyle>

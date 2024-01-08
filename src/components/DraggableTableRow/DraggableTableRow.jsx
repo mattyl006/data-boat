@@ -5,9 +5,16 @@ import TableRowStyle from '../TableRow/TableRowStyle';
 import { createPortal } from 'react-dom';
 import { useSelector } from 'react-redux';
 
-const DraggableTableRow = ({ i }) => {
-  const [coords, setCoords] = React.useState({ x: 0, y: 0 });
+const DraggableTableRow = ({ i, setDragLoading, event }) => {
+  const [coords, setCoords] = React.useState({
+    x: event.clientX,
+    y: event.clientY,
+  });
   const items = useSelector((state) => state.tableData.tableData);
+
+  React.useEffect(() => {
+    setDragLoading(false);
+  }, [setDragLoading]);
 
   React.useEffect(() => {
     const handleWindowMouseMove = (event) => {
