@@ -16,7 +16,6 @@ import resetIco from '../../assets/reset.svg';
 import zoomInIco from '../../assets/zoomIn.svg';
 import zoomOutIco from '../../assets/zoomOut.svg';
 
-
 const Source = ({ images, imageBboxes }) => {
   const imagesLength = images?.length;
   const imageBboxesLength = imageBboxes?.length;

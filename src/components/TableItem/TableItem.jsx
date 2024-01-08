@@ -2,7 +2,10 @@ import React from 'react';
 import TableItemStyle from './TableItemStyle';
 import { onItemBlur, onItemFocus, onItemClick } from './tableItemHelper';
 import { useDispatch, useSelector } from 'react-redux';
-import { tableDataUpdate, setTableModifyEventWas } from '../../redux/tableDataSlice';
+import {
+  tableDataUpdate,
+  setTableModifyEventWas,
+} from '../../redux/tableDataSlice';
 import Loading from '../Loading';
 import { createPortal } from 'react-dom';
 import { FlexColumn } from '../../utils/containers';
@@ -10,7 +13,9 @@ import theme from '../../utils/theme';
 
 const TableItem = ({ i, j, item, bboxIds }) => {
   const dispatch = useDispatch();
-  const tableModifyEventWas = useSelector((state) => state.tableData.tableModifyEventWas);
+  const tableModifyEventWas = useSelector(
+    (state) => state.tableData.tableModifyEventWas
+  );
   const [selectedBboxes, setSelectedBboxes] = React.useState([]);
   const [scrollPage, setScrollPage] = React.useState(0);
   const itemKey = item[0];
@@ -23,9 +28,9 @@ const TableItem = ({ i, j, item, bboxIds }) => {
   React.useEffect(() => {
     if (valueToUpdate !== itemValue[0]?.textValue && tableModifyEventWas) {
       setValueToUpdate(itemValue[0]?.textValue ? itemValue[0].textValue : '');
-      dispatch(setTableModifyEventWas(false))
+      dispatch(setTableModifyEventWas(false));
     }
-  }, [dispatch, itemValue, tableModifyEventWas, valueToUpdate])
+  }, [dispatch, itemValue, tableModifyEventWas, valueToUpdate]);
 
   React.useEffect(() => {
     if (valueToUpdate === itemValue[0]?.textValue) {
@@ -84,6 +89,7 @@ const TableItem = ({ i, j, item, bboxIds }) => {
   return (
     <TableItemStyle
       id={`bboxes-${bboxIds[j]}`}
+      className="tableItem"
       as="textarea"
       type="text"
       onBlur={() => {

@@ -9,6 +9,14 @@ const onItemBlur = (selectedBboxes, setScrollPage) => {
 };
 
 const onItemFocus = (itemValue, setSelectedBboxes) => {
+  const tableItemElements = document.getElementsByClassName('tableItem');
+  if (tableItemElements?.length) {
+    for (let tableItemElem of tableItemElements) {
+      if (tableItemElem) {
+        tableItemElem.classList.remove('tableItemFocus');
+      }
+    }
+  }
   const newSelectedBboxes = [];
   itemValue?.forEach((bbox) => {
     const id = `bbox-${bbox.id}`;
