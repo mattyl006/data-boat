@@ -9,7 +9,7 @@ import {
 import EntireScreenLoading from '../EntireScreenLoading';
 import { TIMEOUT_VALUE } from '../../utils/globals';
 
-const TableItem = ({ i, j, item, bboxIds }) => {
+const TableItem = ({ i, j, item, bboxIds, readOnly }) => {
   const dispatch = useDispatch();
   const tableModifyEventWas = useSelector(
     (state) => state.tableData.tableModifyEventWas
@@ -42,28 +42,8 @@ const TableItem = ({ i, j, item, bboxIds }) => {
         <TableItemStyle
           id={`bboxes-${bboxIds[j]}`}
           as="textarea"
+          className="tableItem"
           type="text"
-          onBlur={() => {
-            onItemBlur(selectedBboxes, setScrollPage);
-            if (valueToUpdate !== itemValue[0].textValue) {
-              setUpdateLoading(true);
-              setTimeout(() => {
-                dispatch(
-                  tableDataUpdate({
-                    row: i,
-                    column: itemKey,
-                    value: valueToUpdate,
-                  })
-                );
-              }, TIMEOUT_VALUE);
-            }
-          }}
-          onFocus={() => onItemFocus(itemValue, setSelectedBboxes)}
-          onClick={() => onItemClick(itemValue, scrollPage, setScrollPage)}
-          onChange={(event) => {
-            const textValue = event.target.value;
-            setValueToUpdate(textValue);
-          }}
           value={valueToUpdate}
         />
         <EntireScreenLoading />
@@ -74,8 +54,8 @@ const TableItem = ({ i, j, item, bboxIds }) => {
   return (
     <TableItemStyle
       id={`bboxes-${bboxIds[j]}`}
-      className="tableItem"
       as="textarea"
+      className="tableItem"
       type="text"
       onBlur={() => {
         onItemBlur(selectedBboxes, setScrollPage);
@@ -95,8 +75,10 @@ const TableItem = ({ i, j, item, bboxIds }) => {
       onFocus={() => onItemFocus(itemValue, setSelectedBboxes)}
       onClick={() => onItemClick(itemValue, scrollPage, setScrollPage)}
       onChange={(event) => {
-        const textValue = event.target.value;
-        setValueToUpdate(textValue);
+        if (!readOnly) {
+          const textValue = event.target.value;
+          setValueToUpdate(textValue);
+        }
       }}
       value={valueToUpdate}
     />
