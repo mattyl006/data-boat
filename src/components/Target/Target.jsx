@@ -33,14 +33,14 @@ const Target = ({fileName}) => {
       href: objUrl,
       download: `${fileName?.split('.')[0]}.xlsx`,
       handler: () => downloadTable(tableData, setObjUrl),
-      disabled: false,
+      disabled: tableData?.length ? false : true,
     },
   ];
 
   if (tableData?.length) {
     return (
       <>
-        <Menu icons={icons} />
+        <Menu icons={icons}/>
         <TargetStyle>
           <Table />
         </TargetStyle>
