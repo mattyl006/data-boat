@@ -12,7 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   tableRowsCheckedUpdate,
   tableDataAddNewRow,
-  tableDataDeleteRow
+  tableDataDeleteRow,
+  setTableModifyEventWas
 } from '../../redux/tableDataSlice';
 
 const RowMenu = ({ i, setRowMenuHover, setRowDraggable }) => {
@@ -36,6 +37,7 @@ const RowMenu = ({ i, setRowMenuHover, setRowDraggable }) => {
 
   const addRowHandle = (i) => {
     dispatch(tableDataAddNewRow({ row: i }));
+    dispatch(setTableModifyEventWas(true));
   };
 
   if (rowMenuOpen[i]) {

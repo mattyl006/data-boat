@@ -10,6 +10,7 @@ import Loading from '../Loading';
 import { createPortal } from 'react-dom';
 import { FlexColumn } from '../../utils/containers';
 import theme from '../../utils/theme';
+import EntireScreenLoading from '../EntireScreenLoading';
 
 const TableItem = ({ i, j, item, bboxIds }) => {
   const dispatch = useDispatch();
@@ -68,20 +69,7 @@ const TableItem = ({ i, j, item, bboxIds }) => {
           }}
           value={valueToUpdate}
         />
-        {createPortal(
-          <FlexColumn
-            width="100%"
-            height="100vh"
-            position="absolute"
-            top="0"
-            left="0"
-            zIndex="100"
-            backgroundColor={theme.colors.blackTrans}
-          >
-            <Loading />
-          </FlexColumn>,
-          document.body
-        )}
+        <EntireScreenLoading />
       </>
     );
   }
