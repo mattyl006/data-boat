@@ -8,12 +8,14 @@ import {
   tableOpenMenuRowUpdate,
   tableRowsSwap,
 } from '../../redux/tableDataSlice';
+import EntireScreenLoading from '../EntireScreenLoading';
 
-const TableRow = ({ i, row, bboxIds, tableRowDrop, setTableRowDrop}) => {
+const TableRow = ({ i, row, bboxIds, tableRowDrop, setTableRowDrop }) => {
   const dispatch = useDispatch();
   const itemsChecked = useSelector((state) => state.tableData.tableRowsChecked);
   const [rowMenuHover, setRowMenuHover] = React.useState(false);
   const [rowDraggable, setRowDraggable] = React.useState(false);
+  const [tableLoading, setTableLoading] = React.useState(false);
 
   const handleOnDrag = (e, i, row) => {
     setTableRowDrop({ row: row, index: i });
@@ -29,9 +31,51 @@ const TableRow = ({ i, row, bboxIds, tableRowDrop, setTableRowDrop}) => {
           currentRowIndex: currentRowIndex,
         })
       );
-      setTableRowDrop(null)
+      setTableRowDrop(null);
     }
   };
+
+  if (tableLoading) {
+    return (
+      <>
+        <EntireScreenLoading />
+        <TableRowStyle
+          id={`row-${bboxIds}`}
+          key={`row-${i}`}
+          onClick={() =>
+            dispatch(tableOpenMenuRowUpdate({ i: i, value: true }))
+          }
+          onBlur={() => {
+            if (!rowMenuHover)
+              dispatch(tableOpenMenuRowUpdate({ i: i, value: false }));
+          }}
+          check={itemsChecked[i]}
+          draggable={rowDraggable}
+          onDragStart={(e) => handleOnDrag(e, i, row)}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => handleOnDrop(e, i)}
+        >
+          {Object.entries(row).map((item, j) => {
+            return (
+              <TableItem
+                key={`item-${i}-${j}`}
+                i={i}
+                j={j}
+                item={item}
+                bboxIds={bboxIds}
+              />
+            );
+          })}
+          <RowMenu
+            i={i}
+            setRowMenuHover={setRowMenuHover}
+            setRowDraggable={setRowDraggable}
+            setTableLoading={setTableLoading}
+          />
+        </TableRowStyle>
+      </>
+    );
+  }
 
   return (
     <TableRowStyle
@@ -63,6 +107,7 @@ const TableRow = ({ i, row, bboxIds, tableRowDrop, setTableRowDrop}) => {
         i={i}
         setRowMenuHover={setRowMenuHover}
         setRowDraggable={setRowDraggable}
+        setTableLoading={setTableLoading}
       />
     </TableRowStyle>
   );

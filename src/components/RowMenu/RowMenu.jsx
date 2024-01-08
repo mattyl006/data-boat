@@ -13,10 +13,9 @@ import {
   tableRowsCheckedUpdate,
   tableDataAddNewRow,
   tableDataDeleteRow,
-  setTableModifyEventWas
 } from '../../redux/tableDataSlice';
 
-const RowMenu = ({ i, setRowMenuHover, setRowDraggable }) => {
+const RowMenu = ({ i, setRowMenuHover, setRowDraggable, setTableLoading }) => {
   const dispatch = useDispatch();
   const rowMenuOpen = useSelector(
     (state) => state.tableData.tableOpenMenuRow
@@ -25,6 +24,11 @@ const RowMenu = ({ i, setRowMenuHover, setRowDraggable }) => {
     (state) => state.tableData.tableRowsChecked
   );
   const [rowChecked, setRowChecked] = React.useState(false);
+
+  React.useEffect(() => {
+    setTableLoading(false);
+  }, [rowsChecked, setTableLoading])
+
   const iconSize = '18px';
   const freeSpaces = '6px';
 
@@ -36,8 +40,10 @@ const RowMenu = ({ i, setRowMenuHover, setRowDraggable }) => {
   };
 
   const addRowHandle = (i) => {
-    dispatch(tableDataAddNewRow({ row: i }));
-    dispatch(setTableModifyEventWas(true));
+    setTableLoading(true);
+    setTimeout(() => {
+      dispatch(tableDataAddNewRow({ row: i }));
+    }, 100);
   };
 
   if (rowMenuOpen[i]) {
