@@ -1,12 +1,9 @@
 const ELEMENTS_PER_PAGE = 20;
-// const API = 'http://karida-gpu.vm.wmi.amu.edu.pl:8000';
 const API = 'http://127.0.0.1:8000';
-
-const APIToken =
-  'Or/HAzWugWR!FBQVIK9vlDy8HgfR8okbAodae?iFS?c7wzeA6obGnVq-YzakT0fj';
 const IS_MOBILE = () => {
   return document.body.clientWidth <= 768;
 };
+const TIMEOUT_VALUE = 100;
 
 const TEST_TARGET_ITEMS = [
   {
@@ -23,4 +20,4 @@ const TEST_TARGET_ITEMS = [
   },
 ];
 
-export { API, APIToken, TEST_TARGET_ITEMS, ELEMENTS_PER_PAGE, IS_MOBILE };
+export { API, TEST_TARGET_ITEMS, ELEMENTS_PER_PAGE, TIMEOUT_VALUE, IS_MOBILE };

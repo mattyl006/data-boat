@@ -1,7 +1,5 @@
 import { API } from '../utils/globals';
 
-// import { APIToken } from '../utils/globals';
-
 const processPdf = (e, setResult, setFileName, APIToken) => {
   const file = e.target.files[0];
   const formData = new FormData();

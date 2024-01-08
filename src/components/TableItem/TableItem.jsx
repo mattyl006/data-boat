@@ -6,11 +6,8 @@ import {
   tableDataUpdate,
   setTableModifyEventWas,
 } from '../../redux/tableDataSlice';
-import Loading from '../Loading';
-import { createPortal } from 'react-dom';
-import { FlexColumn } from '../../utils/containers';
-import theme from '../../utils/theme';
 import EntireScreenLoading from '../EntireScreenLoading';
+import { TIMEOUT_VALUE } from '../../utils/globals';
 
 const TableItem = ({ i, j, item, bboxIds }) => {
   const dispatch = useDispatch();
@@ -58,7 +55,7 @@ const TableItem = ({ i, j, item, bboxIds }) => {
                     value: valueToUpdate,
                   })
                 );
-              }, 100);
+              }, TIMEOUT_VALUE);
             }
           }}
           onFocus={() => onItemFocus(itemValue, setSelectedBboxes)}
@@ -92,7 +89,7 @@ const TableItem = ({ i, j, item, bboxIds }) => {
                 value: valueToUpdate,
               })
             );
-          }, 100);
+          }, TIMEOUT_VALUE);
         }
       }}
       onFocus={() => onItemFocus(itemValue, setSelectedBboxes)}
