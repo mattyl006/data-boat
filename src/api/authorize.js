@@ -20,11 +20,14 @@ const authorize = async (username, hash, setResult) => {
       }
     )
     .then((json) => {
-      console.log('json SDSFASDASDASDA response processing');
+      console.log('json response processing');
       console.log(json);
-      setResult(json.token);
+      if (json) {
+        setResult(json.token);
+      } else {
+        console.log('getting salt failed');
+      }
     });
 };
-// pusty string jak cos bedzie nie tak
 
 export default authorize;

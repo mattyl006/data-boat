@@ -1,5 +1,3 @@
-// import { AuthProvider } from './AuthContext';
-// import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import { ThemeProvider } from 'styled-components';
 import theme from './utils/theme';

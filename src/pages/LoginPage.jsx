@@ -10,31 +10,21 @@ import CryptoJS from 'crypto-js';
 import { setToken } from '../redux/authorizeSlice';
 
 function createHashString(inputString, salt, ITERATIONS = 10000, keySize = 256) {
-    // Generate input + reverse input
     let inputReversed = inputString.split('').reverse().join('');
- 
-    // Generate the hash
     let hash = CryptoJS.PBKDF2(inputString + inputReversed, salt, {
         keySize: keySize / 32,
         iterations: ITERATIONS,
         hasher: CryptoJS.algo.SHA1
     });
- 
     return CryptoJS.enc.Base64.stringify(hash);
 }
 
 function generateHash(username, password, salt) {
-    // Concatenate the username, password, and salt
     let first = createHashString(username, salt);
     let second = createHashString(password, salt);
     let final = createHashString(first + second, salt);
- 
-    // Create a SHA-256 hash of the combined string
     let hashObject = CryptoJS.SHA256(final);
- 
-    // Get the hexadecimal representation of the hash
     let hash = hashObject.toString(CryptoJS.enc.Hex);
- 
     return hash;
 }
 
@@ -43,10 +33,6 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [salt, setSalt] = useState('');
     const dispatch = useDispatch();
-
-    // jak go nie ma to pusty string
-
-    // const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -83,7 +69,6 @@ const LoginPage = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-
                 <label className="LandingSpace__login" htmlFor="password">Hasło:</label>
                 <input
                     className="login-form__input"
@@ -93,12 +78,9 @@ const LoginPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-
                 <button type="submit">Zaloguj</button>
             </form>
         </LandingSpaceStyle>
-
-
     );
 };
 
