@@ -32,6 +32,7 @@ export const tableDataSlice = createSlice({
             };
           }
         });
+        data[rowIndex]['deleted'] = false;
       });
       state.tableData = data;
       const initBoolVector = Array(data.length).fill(false);
@@ -52,6 +53,7 @@ export const tableDataSlice = createSlice({
         '2nd': [{ textValue: '' }],
         '3rd': [{ textValue: '' }],
         '4th': [{ textValue: '' }],
+        deleted: false,
       };
       const newTableData = addValueToArray(state.tableData, emptyRow, row);
       const newTableRowsChecked = addValueToArray(
@@ -71,19 +73,23 @@ export const tableDataSlice = createSlice({
     },
     tableDataDeleteRow: (state, action) => {
       const { row } = action.payload;
-      const newTableData = removeValueFromArray(state.tableData, row);
-      const newTableRowsChecked = removeValueFromArray(
-        state.tableRowsChecked,
-        row
-      );
-      const newTableOpenMenuRow = removeValueFromArray(
-        state.tableOpenMenuRow,
-        row
-      );
-      state.tableData = newTableData;
-      state.tableRowsChecked = newTableRowsChecked;
-      state.tableOpenMenuRow = newTableOpenMenuRow;
+      state.tableData[row]['deleted'] = true;
+      state.tableOpenMenuRow[row] = false;
+      state.tableRowsChecked[row] = false;
       state.tableModifyEventWas = true;
+
+      // const newTableData = removeValueFromArray(state.tableData, row);
+      // const newTableRowsChecked = removeValueFromArray(
+      //   state.tableRowsChecked,
+      //   row
+      // );
+      // const newTableOpenMenuRow = removeValueFromArray(
+      //   state.tableOpenMenuRow,
+      //   row
+      // );
+      // state.tableData = newTableData;
+      // state.tableRowsChecked = newTableRowsChecked;
+      // state.tableOpenMenuRow = newTableOpenMenuRow;
     },
     tableRowsCheckedUpdate: (state, action) => {
       const { i, value } = action.payload;

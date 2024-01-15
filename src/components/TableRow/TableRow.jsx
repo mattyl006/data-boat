@@ -38,16 +38,18 @@ const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
       }}
       check={itemsChecked[i]}
     >
-      {Object.entries(row).map((item, j) => {
-        return (
-          <TableItem
-            key={`item-${i}-${j}`}
-            i={i}
-            j={j}
-            item={item}
-            bboxIds={bboxIds}
-          />
-        );
+      {Object.entries(row).slice(0, -1).map((item, j) => {
+        if (!row.deleted) {
+          return (
+            <TableItem
+              key={`item-${i}-${j}`}
+              i={i}
+              j={j}
+              item={item}
+              bboxIds={bboxIds}
+            />
+          );
+        } return null;
       })}
       <RowMenu
         i={i}

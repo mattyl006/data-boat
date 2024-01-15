@@ -13,14 +13,16 @@ const getRow = (row, col) => {
 const downloadTable = (tableData, setObjUrl) => {
   let tsvContent = `a\tb\tc\td\n`;
   tableData.forEach((row) => {
-    const rowA = getRow(row, '1st');
-    const rowB = getRow(row, '2nd');
-    const rowC = getRow(row, '3rd');
-    let rowD = getRow(row, '4th');
-    if (rowD.length > 32000) {
-      rowD = rowD.slice(0, 32000);
+    if (!row.deleted) {
+      const rowA = getRow(row, '1st');
+      const rowB = getRow(row, '2nd');
+      const rowC = getRow(row, '3rd');
+      let rowD = getRow(row, '4th');
+      if (rowD.length > 32000) {
+        rowD = rowD.slice(0, 32000);
+      }
+      tsvContent += `${rowA}\t${rowB}\t${rowC}\t${rowD}\n`;
     }
-    tsvContent += `${rowA}\t${rowB}\t${rowC}\t${rowD}\n`;
   });
   const wb = read(tsvContent.split(',').join('","'), {
     type: 'string',
