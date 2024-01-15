@@ -11,45 +11,45 @@ import {
 } from './SourceStyles';
 import { API } from '../../utils/globals';
 import Menu from '../Menu';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import resetIco from '../../assets/reset.svg';
 import zoomInIco from '../../assets/zoomIn.svg';
 import zoomOutIco from '../../assets/zoomOut.svg';
+import { findTableRow } from '../../redux/synchronizeSlice';
 
 const Source = ({ images, imageBboxes }) => {
   const imagesLength = images?.length;
   const imageBboxesLength = imageBboxes?.length;
   const imagesRendered =
     imagesLength && imageBboxesLength && imagesLength === imageBboxesLength;
-  const tableRowIds = useSelector((state) => state.rowIds.rowIds);
-  const [selectedTableItem, setSelectedTableItem] = React.useState(null);
   const token = useSelector((state) => state.authorize.token);
   const twoScreens = useSelector((state) => state.synchronize.twoScreens);
+  const dispatch = useDispatch();
 
-  const findTableRow = (bboxId) => {
-    let findedItemId = null;
-    tableRowIds.forEach((rowIds) => {
-      rowIds.forEach((itemIds) => {
-        if (itemIds.includes(bboxId)) {
-          findedItemId = itemIds;
-        }
-      });
-    });
-    if (findedItemId) {
-      if (selectedTableItem) {
-        const element = document.getElementById(`bboxes-${selectedTableItem}`);
-        if (element) {
-          element.classList.remove('tableItemFocus');
-        }
-      }
-      setSelectedTableItem(findedItemId);
-      const element = document.getElementById(`bboxes-${findedItemId}`);
-      if (element) {
-        element.classList.add('tableItemFocus');
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
+  // const findTableRow = (bboxId) => {
+  //   let findedItemId = null;
+  //   tableRowIds.forEach((rowIds) => {
+  //     rowIds.forEach((itemIds) => {
+  //       if (itemIds.includes(bboxId)) {
+  //         findedItemId = itemIds;
+  //       }
+  //     });
+  //   });
+  //   if (findedItemId) {
+  //     if (selectedTableItem) {
+  //       const element = document.getElementById(`bboxes-${selectedTableItem}`);
+  //       if (element) {
+  //         element.classList.remove('tableItemFocus');
+  //       }
+  //     }
+  //     setSelectedTableItem(findedItemId);
+  //     const element = document.getElementById(`bboxes-${findedItemId}`);
+  //     if (element) {
+  //       element.classList.add('tableItemFocus');
+  //       element.scrollIntoView({ behavior: 'smooth' });
+  //     }
+  //   }
+  // };
 
   const imagesRender = () => {
     if (imagesRendered) {
@@ -73,7 +73,7 @@ const Source = ({ images, imageBboxes }) => {
                   width={width}
                   height={height}
                   bboxFocus={false}
-                  onClick={() => findTableRow(bbox.id)}
+                  onClick={() => dispatch(findTableRow(bbox.id))}
                 >
                   <BboxTextStyle>{text}</BboxTextStyle>
                 </BboxStyle>

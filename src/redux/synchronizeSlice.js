@@ -4,6 +4,8 @@ const initialState = {
   selectedBboxes: [],
   scrollPage: 0,
   twoScreens: false,
+  tableRowIds: [],
+  selectedTableItem: null,
 };
 
 export const synchronizeSlice = createSlice({
@@ -59,10 +61,48 @@ export const synchronizeSlice = createSlice({
         }
       }
     },
+    addRowId: (state, action) => {
+      const newRowIds = state.tableRowIds.slice();
+      newRowIds.push(action.payload);
+      state.tableRowIds = newRowIds;
+    },
+    findTableRow: (state, action) => {
+      const bboxId = action.payload;
+      let findedItemId = null;
+      state.tableRowIds.forEach((rowIds) => {
+        rowIds.forEach((itemIds) => {
+          if (itemIds.includes(bboxId)) {
+            findedItemId = itemIds;
+          }
+        });
+      });
+      if (findedItemId) {
+        if (state.selectedTableItem) {
+          const element = document.getElementById(
+            `bboxes-${state.selectedTableItem}`
+          );
+          if (element) {
+            element.classList.remove('tableItemFocus');
+          }
+        }
+        state.selectedTableItem = findedItemId;
+        const element = document.getElementById(`bboxes-${findedItemId}`);
+        if (element) {
+          element.classList.add('tableItemFocus');
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    },
   },
 });
 
-export const { onItemBlur, onItemFocus, onItemClick, setTwoScreens } =
-  synchronizeSlice.actions;
+export const {
+  onItemBlur,
+  onItemFocus,
+  onItemClick,
+  setTwoScreens,
+  addRowId,
+  findTableRow,
+} = synchronizeSlice.actions;
 
 export default synchronizeSlice.reducer;

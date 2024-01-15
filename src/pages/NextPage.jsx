@@ -19,10 +19,8 @@ const NextPage = () => {
   const fileName = useSelector((state) => state.tableData.fileName);
 
   React.useEffect(() => {
-    if (items?.length) {
       dispatch(setTwoScreens(true));
-    }
-  }, [dispatch, items]);
+  }, [dispatch]);
 
   const icons = [
     { src: zoomInIco, handler: () => console.log('zoomIn'), disabled: true },
@@ -33,7 +31,7 @@ const NextPage = () => {
       as: 'a',
       href: objUrl,
       download: `${fileName?.split('.')[0]}.xlsx`,
-      handler: () => downloadTable(items, setObjUrl),
+      handler: () => downloadTable(setObjUrl),
       disabled: items?.length ? false : true,
     },
   ];
@@ -45,7 +43,7 @@ const NextPage = () => {
           <Menu icons={icons} />
         </FlexColumn>
         <FlexColumn
-          padding="120px 60px 60px 120px"
+          padding="120px 80px 60px 140px"
           backgroundColor="rgba(42, 42, 74, 1)"
           alignmentY="flex-start"
           width="100%"

@@ -31,7 +31,12 @@ export const tableDataSlice = createSlice({
             data[rowIndex][col][0] = {
               ...action.payload[rowIndex][col][0],
               textValue: action.payload[rowIndex][col]
-                .map((item) => item.text + ' ')
+                .map((item) => {
+                  if (item.text) {
+                    return item.text + ' ';
+                  }
+                  return '';
+                })
                 .join(''),
             };
           }

@@ -1,7 +1,7 @@
 import React from 'react';
 import TableStyle from './TableStyle';
 import { useDispatch } from 'react-redux';
-import { addRowId } from '../../redux/rowIdsSlice';
+import { addRowId } from '../../redux/synchronizeSlice';
 import { useSelector } from 'react-redux';
 import TableRow from '../TableRow/TableRow';
 import DraggableTableRow from '../DraggableTableRow';
@@ -13,14 +13,16 @@ const Table = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.tableData.tableData);
   const [tableRowDrop, setTableRowDrop] = React.useState(null);
-  const [, updateState] = React.useState();
-  const forceUpdate = React.useCallback(() => updateState({}), []);
+  // const [, updateState] = React.useState();
+  // const forceUpdate = React.useCallback(() => updateState({}), []);
   const [dragLoading, setDragLoading] = React.useState(false);
   const [dropLoading, setDropLoading] = React.useState(false);
 
-  React.useEffect(() => {
-    forceUpdate();
-  }, [forceUpdate, items]);
+  // React.useEffect(() => {
+  //   forceUpdate();
+  // }, [forceUpdate, items]);
+
+  console.log(items);
 
   React.useEffect(() => {
     if (tableRowDrop === null) {
