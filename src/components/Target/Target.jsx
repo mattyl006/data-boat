@@ -32,7 +32,7 @@ const Target = ({fileName}) => {
       as: 'a',
       href: objUrl,
       download: `${fileName?.split('.')[0]}.xlsx`,
-      handler: () => downloadTable(tableData, setObjUrl),
+      handler: () => downloadTable(setObjUrl),
       disabled: tableData?.length ? false : true,
     },
   ];

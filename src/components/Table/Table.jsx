@@ -66,7 +66,7 @@ const Table = () => {
 
   return (
     <>
-      <TableStyle>
+      <TableStyle id="Table">
         {items.map((row, i) => {
           const bboxIds = Object.values(row)?.map(
             (item) => '' + Object.values(item)?.map((bbox) => bbox.id + '')

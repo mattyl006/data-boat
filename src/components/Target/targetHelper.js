@@ -4,20 +4,17 @@ const format = (text) => {
   return text.replaceAll('\n', '').replaceAll('\t', '');
 };
 
-const getRow = (row, col) => {
-  const textValue = row[col][0]?.textValue;
-  if (textValue) return format(textValue);
-  return '';
-};
-
-const downloadTable = (tableData, setObjUrl) => {
+const downloadTable = (setObjUrl) => {
+  const tableData = Object.values(
+    document.getElementById('Table').childNodes
+  ).map((node) => node.childNodes);
   let tsvContent = `a\tb\tc\td\n`;
   tableData.forEach((row) => {
     if (!row.deleted) {
-      const rowA = getRow(row, '1st');
-      const rowB = getRow(row, '2nd');
-      const rowC = getRow(row, '3rd');
-      let rowD = getRow(row, '4th');
+      const rowA = format(row[0].value);
+      const rowB = format(row[1].value);
+      const rowC = format(row[2].value);
+      let rowD = format(row[3].value);
       if (rowD.length > 32000) {
         rowD = rowD.slice(0, 32000);
       }
