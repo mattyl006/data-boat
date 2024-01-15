@@ -11,7 +11,7 @@ const MenuStyle = styled(FlexColumn)`
   justify-content: flex-start;
   z-index: 2;
 
-  position: fixed;
+  position: ${({ twoScreens }) => (twoScreens ? 'fixed' : 'static')};
   top: 60px;
   left: 0;
 `;

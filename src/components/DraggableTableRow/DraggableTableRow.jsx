@@ -42,7 +42,7 @@ const DraggableTableRow = ({ i, setDragLoading, event }) => {
       opacity="0.3"
     >
       <TableRowStyle>
-        {Object.entries(items[i]).slice(0, -1).map((item, j) => {
+        {Object.entries(items[i]).map((item, j) => {
           return (
             <TableItem
               key={`item-${i}-${j}`}

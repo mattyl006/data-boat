@@ -4,9 +4,7 @@ import { useSelector } from 'react-redux';
 import RowMenu from '../RowMenu';
 import TableItem from '../TableItem';
 import { useDispatch } from 'react-redux';
-import {
-  tableOpenMenuRowUpdate,
-} from '../../redux/tableDataSlice';
+import { tableOpenMenuRowUpdate } from '../../redux/tableDataSlice';
 import EntireScreenLoading from '../EntireScreenLoading';
 
 const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
@@ -38,8 +36,8 @@ const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
       }}
       check={itemsChecked[i]}
     >
-      {Object.entries(row).slice(0, -1).map((item, j) => {
-        if (!row.deleted) {
+      {Object.entries(row)
+        .map((item, j) => {
           return (
             <TableItem
               key={`item-${i}-${j}`}
@@ -49,8 +47,7 @@ const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
               bboxIds={bboxIds}
             />
           );
-        } return null;
-      })}
+        })}
       <RowMenu
         i={i}
         setRowMenuHover={setRowMenuHover}

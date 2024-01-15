@@ -10,16 +10,14 @@ const downloadTable = (setObjUrl) => {
   ).map((node) => node.childNodes);
   let tsvContent = `a\tb\tc\td\n`;
   tableData.forEach((row) => {
-    if (!row.deleted) {
-      const rowA = format(row[0].value);
-      const rowB = format(row[1].value);
-      const rowC = format(row[2].value);
-      let rowD = format(row[3].value);
-      if (rowD.length > 32000) {
-        rowD = rowD.slice(0, 32000);
-      }
-      tsvContent += `${rowA}\t${rowB}\t${rowC}\t${rowD}\n`;
+    const rowA = format(row[0].value);
+    const rowB = format(row[1].value);
+    const rowC = format(row[2].value);
+    let rowD = format(row[3].value);
+    if (rowD.length > 32000) {
+      rowD = rowD.slice(0, 32000);
     }
+    tsvContent += `${rowA}\t${rowB}\t${rowC}\t${rowD}\n`;
   });
   const wb = read(tsvContent.split(',').join('","'), {
     type: 'string',

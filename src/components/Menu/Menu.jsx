@@ -3,10 +3,13 @@ import { Svg } from '../../utils/containers';
 import theme from '../../utils/theme';
 import MenuStyle from './MenuStyle';
 import Pager from '../Pager/Pager';
+import { useSelector } from 'react-redux';
 
 const Menu = ({ icons }) => {
+  const twoScreens = useSelector((state) => state.synchronize.twoScreens);
+
   return (
-    <MenuStyle>
+    <MenuStyle twoScreens={twoScreens}>
       {icons?.map((icon, i) => {
         return (
           <Svg
