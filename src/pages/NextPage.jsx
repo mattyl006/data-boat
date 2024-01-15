@@ -1,36 +1,73 @@
 import React from 'react';
 import { FlexColumn } from '../utils/containers';
-import { H1 } from '../utils/fonts';
-import { Link } from 'react-router-dom';
+import Table from '../components/Table/Table';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTwoScreens } from '../redux/synchronizeSlice';
+import Loading from '../components/Loading';
+import { Medium } from '../utils/fonts';
+import resetIco from '../assets/reset.svg';
+import zoomInIco from '../assets/zoomIn.svg';
+import zoomOutIco from '../assets/zoomOut.svg';
+import downloadIco from '../assets/download.svg';
+import { downloadTable } from '../components/Target/targetHelper';
+import Menu from '../components/Menu';
 
 const NextPage = () => {
-  const [name, setName] = React.useState('');
-
-  const onStorageUpdate = (e) => {
-    const { key, newValue } = e;
-    if (key === 'name') {
-      setName(newValue);
-    }
-  };
-
-  const handleChange = (e) => {
-    setName(e.target.value);
-    localStorage.setItem('name', e.target.value);
-  };
+  const items = useSelector((state) => state.tableData.tableData);
+  const dispatch = useDispatch();
+  const [objUrl, setObjUrl] = React.useState(null);
+  const fileName = useSelector((state) => state.tableData.fileName);
 
   React.useEffect(() => {
-    setName(localStorage.getItem('name') || '');
-    window.addEventListener('storage', onStorageUpdate);
-    return () => {
-      window.removeEventListener('storage', onStorageUpdate);
-    };
-  }, []);
+    if (items?.length) {
+      dispatch(setTwoScreens(true));
+    }
+  }, [dispatch, items]);
+
+  const icons = [
+    { src: zoomInIco, handler: () => console.log('zoomIn'), disabled: true },
+    { src: zoomOutIco, handler: () => console.log('zoomOut'), disabled: true },
+    { src: resetIco, handler: () => console.log('reset'), disabled: true },
+    {
+      src: downloadIco,
+      as: 'a',
+      href: objUrl,
+      download: `${fileName?.split('.')[0]}.xlsx`,
+      handler: () => downloadTable(items, setObjUrl),
+      disabled: items?.length ? false : true,
+    },
+  ];
+
+  if (items?.length) {
+    return (
+      <>
+        <FlexColumn zIndex="10" width="60px" height="100vh" position="fixed" top="0" left="0">
+          <Menu icons={icons} />
+        </FlexColumn>
+        <FlexColumn
+          padding="120px 60px 60px 120px"
+          backgroundColor="rgba(42, 42, 74, 1)"
+          alignmentY="flex-start"
+          width="100%"
+        >
+          <Table />
+        </FlexColumn>
+      </>
+    );
+  }
 
   return (
-    <FlexColumn width="100%" height="calc(100vh - 48px)">
-      <H1>NextPage</H1>
-      <Link to="/">StartPage</Link>
-      <input value={name} onChange={handleChange} />
+    <FlexColumn
+      padding="120px 90px 60px"
+      backgroundColor="rgba(42, 42, 74, 1)"
+      width="100%"
+      height="100vh"
+      gap="36px"
+    >
+      <Medium fontSize="24px">
+        Proszę otworzyć dokument na pierwszym ekranie aby wyświetlić tabelę
+      </Medium>
+      <Loading />
     </FlexColumn>
   );
 };

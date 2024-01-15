@@ -24,6 +24,7 @@ const Source = ({ images, imageBboxes }) => {
   const tableRowIds = useSelector((state) => state.rowIds.rowIds);
   const [selectedTableItem, setSelectedTableItem] = React.useState(null);
   const token = useSelector((state) => state.authorize.token);
+  const twoScreens = useSelector((state) => state.synchronize.twoScreens);
 
   const findTableRow = (bboxId) => {
     let findedItemId = null;
@@ -102,13 +103,16 @@ const Source = ({ images, imageBboxes }) => {
   ];
 
   return (
-    <SourceStyle key="sourceStyle">
-      <Menu key="menu" icons={icons} />
-      <SourceImagesContainerStyle>
-        {imagesRender()}
-        {sourceLoadingRender()}
-      </SourceImagesContainerStyle>
-    </SourceStyle>
+    <>
+      {twoScreens && <Menu key="menu" icons={icons} />}
+      <SourceStyle key="sourceStyle">
+        {!twoScreens && <Menu key="menu" icons={icons} />}
+        <SourceImagesContainerStyle>
+          {imagesRender()}
+          {sourceLoadingRender()}
+        </SourceImagesContainerStyle>
+      </SourceStyle>
+    </>
   );
 };
 

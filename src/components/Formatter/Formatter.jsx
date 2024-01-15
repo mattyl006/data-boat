@@ -8,7 +8,7 @@ import { tableDataInit } from '../../redux/tableDataSlice';
 import getPackage from '../../api/getPackage';
 import { packagesInit } from '../../redux/packagesSlice';
 
-const Formatter = ({ pdfProcessingResult, fileName }) => {
+const Formatter = ({ pdfProcessingResult }) => {
   const [pdfData, setPdfData] = React.useState([]);
   const [images, setImages] = React.useState([]);
   const [imageBboxes, setImageBboxes] = React.useState([]);
@@ -16,6 +16,9 @@ const Formatter = ({ pdfProcessingResult, fileName }) => {
   const [pdfPackageResult, setPdfPackageResult] = React.useState(null);
   const page = useSelector((state) => state.packages.page);
   const token = useSelector((state) => state.authorize.token);
+  const twoScreens = useSelector((state) => state.synchronize.twoScreens);
+  const fileName = useSelector((state) => state.tableData.fileName);
+
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -64,7 +67,7 @@ const Formatter = ({ pdfProcessingResult, fileName }) => {
   return (
     <FormatterStyle>
       <Source images={images} imageBboxes={imageBboxes} />
-      <Target fileName={fileName} pdfProcessingResult={pdfProcessingResult} />
+      {!twoScreens && <Target fileName={fileName} pdfProcessingResult={pdfProcessingResult} />}
     </FormatterStyle>
   );
 };

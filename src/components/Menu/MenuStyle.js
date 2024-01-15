@@ -6,9 +6,14 @@ const MenuStyle = styled(FlexColumn)`
   padding: 14px 0;
   width: 60px;
   height: 100%;
+  max-height: calc(100vh - 60px);
   gap: 28px;
   justify-content: flex-start;
   z-index: 2;
+
+  position: fixed;
+  top: 60px;
+  left: 0;
 `;
 
 export default MenuStyle;

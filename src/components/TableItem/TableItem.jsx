@@ -1,10 +1,15 @@
 import React from 'react';
 import TableItemStyle from './TableItemStyle';
-import { onItemBlur, onItemFocus, onItemClick } from './tableItemHelper';
+// import { onItemBlur, onItemFocus, onItemClick } from './tableItemHelper';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setTableModifyEventWas,
 } from '../../redux/tableDataSlice';
+import {
+  onItemBlur,
+  onItemClick,
+  onItemFocus,
+} from '../../redux/synchronizeSlice';
 import EntireScreenLoading from '../EntireScreenLoading';
 
 const TableItem = ({ i, j, item, bboxIds, readOnly }) => {
@@ -12,8 +17,6 @@ const TableItem = ({ i, j, item, bboxIds, readOnly }) => {
   const tableModifyEventWas = useSelector(
     (state) => state.tableData.tableModifyEventWas
   );
-  const [selectedBboxes, setSelectedBboxes] = React.useState([]);
-  const [scrollPage, setScrollPage] = React.useState(0);
   const itemValue = item[1];
   const [valueToUpdate, setValueToUpdate] = React.useState(
     itemValue[0]?.textValue ? itemValue[0].textValue : ''
@@ -55,10 +58,20 @@ const TableItem = ({ i, j, item, bboxIds, readOnly }) => {
       className="tableItem"
       type="text"
       onBlur={() => {
-        onItemBlur(selectedBboxes, setScrollPage);
+        dispatch(
+          onItemBlur({
+            itemValue,
+          })
+        );
       }}
-      onFocus={() => onItemFocus(itemValue, setSelectedBboxes)}
-      onClick={() => onItemClick(itemValue, scrollPage, setScrollPage)}
+      onFocus={() => {
+        dispatch(onItemFocus(itemValue));
+        // onItemFocus(itemValue, setSelectedBboxes)
+      }}
+      onClick={() => {
+        dispatch(onItemClick(itemValue));
+        // onItemClick(itemValue, scrollPage, setScrollPage)
+      }}
       onChange={(event) => {
         if (!readOnly) {
           const textValue = event.target.value;
