@@ -7,6 +7,7 @@ import fileImage from '../../assets/file.png';
 import processPdf from '../../api/processPdf';
 import LandingSpaceStyle from './LandingSpaceStyle';
 import { useSelector } from 'react-redux';
+import addRow from '../../assets/add_row.svg';
 
 const LandingSpace = ({
   setOpenFormatter,
@@ -24,8 +25,9 @@ const LandingSpace = ({
         <Svg
           backgroundColor={theme.colors.white}
           src={fileImage}
-          width="40px"
-          height="40px"
+          width="36px"
+          height="36px"
+          size="cover"
         />
         <Body className="LandingSpace__input-label">Otwórz dokument</Body>
         <input
@@ -38,6 +40,21 @@ const LandingSpace = ({
             setOpenFormatter(true);
           }}
         />
+      </FlexRow>
+      <FlexRow
+        as="a"
+        href={`${window.location}next-page`}
+        target="_blank"
+        className="LandingSpace__document-input"
+      >
+        <Svg
+          backgroundColor={theme.colors.white}
+          src={addRow}
+          width="36px"
+          height="36px"
+          size="cover"
+        />
+        <Body className="LandingSpace__input-label">Otwórz drugi ekran</Body>
       </FlexRow>
       <Svg
         backgroundColor={theme.colors.white}

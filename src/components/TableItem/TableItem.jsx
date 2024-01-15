@@ -1,11 +1,16 @@
 import React from 'react';
 import TableItemStyle from './TableItemStyle';
-import { onItemBlur, onItemFocus, onItemClick } from './tableItemHelper';
+// import { onItemBlur, onItemFocus, onItemClick } from './tableItemHelper';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   tableDataUpdate,
   setTableModifyEventWas,
 } from '../../redux/tableDataSlice';
+import {
+  onItemBlur,
+  onItemClick,
+  onItemFocus,
+} from '../../redux/synchronizeSlice';
 import EntireScreenLoading from '../EntireScreenLoading';
 import { TIMEOUT_VALUE } from '../../utils/globals';
 
@@ -14,8 +19,6 @@ const TableItem = ({ i, j, item, bboxIds, readOnly }) => {
   const tableModifyEventWas = useSelector(
     (state) => state.tableData.tableModifyEventWas
   );
-  const [selectedBboxes, setSelectedBboxes] = React.useState([]);
-  const [scrollPage, setScrollPage] = React.useState(0);
   const itemKey = item[0];
   const itemValue = item[1];
   const [valueToUpdate, setValueToUpdate] = React.useState(
@@ -58,7 +61,12 @@ const TableItem = ({ i, j, item, bboxIds, readOnly }) => {
       className="tableItem"
       type="text"
       onBlur={() => {
-        onItemBlur(selectedBboxes, setScrollPage);
+        dispatch(
+          onItemBlur({
+            itemValue,
+          })
+        );
+        // onItemBlur(selectedBboxes, setScrollPage);
         if (valueToUpdate !== itemValue[0].textValue) {
           setUpdateLoading(true);
           setTimeout(() => {
@@ -72,8 +80,14 @@ const TableItem = ({ i, j, item, bboxIds, readOnly }) => {
           }, TIMEOUT_VALUE);
         }
       }}
-      onFocus={() => onItemFocus(itemValue, setSelectedBboxes)}
-      onClick={() => onItemClick(itemValue, scrollPage, setScrollPage)}
+      onFocus={() => {
+        dispatch(onItemFocus(itemValue));
+        // onItemFocus(itemValue, setSelectedBboxes)
+      }}
+      onClick={() => {
+        dispatch(onItemClick(itemValue));
+        // onItemClick(itemValue, scrollPage, setScrollPage)
+      }}
       onChange={(event) => {
         if (!readOnly) {
           const textValue = event.target.value;

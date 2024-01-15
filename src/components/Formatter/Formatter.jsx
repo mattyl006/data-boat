@@ -16,6 +16,7 @@ const Formatter = ({ pdfProcessingResult, fileName }) => {
   const [pdfPackageResult, setPdfPackageResult] = React.useState(null);
   const page = useSelector((state) => state.packages.page);
   const token = useSelector((state) => state.authorize.token);
+  const twoScreens = useSelector((state) => state.synchronize.twoScreens);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -64,7 +65,7 @@ const Formatter = ({ pdfProcessingResult, fileName }) => {
   return (
     <FormatterStyle>
       <Source images={images} imageBboxes={imageBboxes} />
-      <Target fileName={fileName} pdfProcessingResult={pdfProcessingResult} />
+      {!twoScreens && <Target fileName={fileName} pdfProcessingResult={pdfProcessingResult} />}
     </FormatterStyle>
   );
 };

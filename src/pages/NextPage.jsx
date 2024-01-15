@@ -1,36 +1,46 @@
 import React from 'react';
 import { FlexColumn } from '../utils/containers';
-import { H1 } from '../utils/fonts';
-import { Link } from 'react-router-dom';
+import Table from '../components/Table/Table';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTwoScreens } from '../redux/synchronizeSlice';
+import Loading from '../components/Loading';
+import { Medium } from '../utils/fonts';
 
 const NextPage = () => {
-  const [name, setName] = React.useState('');
-
-  const onStorageUpdate = (e) => {
-    const { key, newValue } = e;
-    if (key === 'name') {
-      setName(newValue);
-    }
-  };
-
-  const handleChange = (e) => {
-    setName(e.target.value);
-    localStorage.setItem('name', e.target.value);
-  };
+  const items = useSelector((state) => state.tableData.tableData);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    setName(localStorage.getItem('name') || '');
-    window.addEventListener('storage', onStorageUpdate);
-    return () => {
-      window.removeEventListener('storage', onStorageUpdate);
-    };
-  }, []);
+    if (items?.length) {
+      dispatch(setTwoScreens(true));
+    }
+  }, [dispatch, items]);
+
+  if (items?.length) {
+    return (
+      <FlexColumn
+        padding="120px 90px 60px"
+        backgroundColor="rgba(42, 42, 74, 1)"
+        alignmentY="flex-start"
+        width="100%"
+      >
+        <Table />
+      </FlexColumn>
+    );
+  }
 
   return (
-    <FlexColumn width="100%" height="calc(100vh - 48px)">
-      <H1>NextPage</H1>
-      <Link to="/">StartPage</Link>
-      <input value={name} onChange={handleChange} />
+    <FlexColumn
+      padding="120px 90px 60px"
+      backgroundColor="rgba(42, 42, 74, 1)"
+      width="100%"
+      height="100vh"
+      gap="36px"
+    >
+      <Medium fontSize="24px">
+        Proszę otworzyć dokument na pierwszym ekranie aby wyświetlić tabelę
+      </Medium>
+      <Loading />
     </FlexColumn>
   );
 };
