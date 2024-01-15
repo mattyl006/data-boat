@@ -5,10 +5,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTwoScreens } from '../redux/synchronizeSlice';
 import Loading from '../components/Loading';
 import { Medium } from '../utils/fonts';
+import resetIco from '../assets/reset.svg';
+import zoomInIco from '../assets/zoomIn.svg';
+import zoomOutIco from '../assets/zoomOut.svg';
+import downloadIco from '../assets/download.svg';
+import { downloadTable } from '../components/Target/targetHelper';
+import Menu from '../components/Menu';
 
 const NextPage = () => {
   const items = useSelector((state) => state.tableData.tableData);
   const dispatch = useDispatch();
+  const [objUrl, setObjUrl] = React.useState(null);
+  const fileName = useSelector((state) => state.tableData.fileName);
 
   React.useEffect(() => {
     if (items?.length) {
@@ -16,16 +24,35 @@ const NextPage = () => {
     }
   }, [dispatch, items]);
 
+  const icons = [
+    { src: zoomInIco, handler: () => console.log('zoomIn'), disabled: true },
+    { src: zoomOutIco, handler: () => console.log('zoomOut'), disabled: true },
+    { src: resetIco, handler: () => console.log('reset'), disabled: true },
+    {
+      src: downloadIco,
+      as: 'a',
+      href: objUrl,
+      download: `${fileName?.split('.')[0]}.xlsx`,
+      handler: () => downloadTable(items, setObjUrl),
+      disabled: items?.length ? false : true,
+    },
+  ];
+
   if (items?.length) {
     return (
-      <FlexColumn
-        padding="120px 90px 60px"
-        backgroundColor="rgba(42, 42, 74, 1)"
-        alignmentY="flex-start"
-        width="100%"
-      >
-        <Table />
-      </FlexColumn>
+      <>
+        <FlexColumn zIndex="10" width="60px" height="100vh" position="fixed" top="0" left="0">
+          <Menu icons={icons} />
+        </FlexColumn>
+        <FlexColumn
+          padding="120px 60px 60px 120px"
+          backgroundColor="rgba(42, 42, 74, 1)"
+          alignmentY="flex-start"
+          width="100%"
+        >
+          <Table />
+        </FlexColumn>
+      </>
     );
   }
 

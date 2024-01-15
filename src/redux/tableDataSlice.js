@@ -5,6 +5,7 @@ const initialState = {
   tableRowsChecked: [],
   tableOpenMenuRow: [],
   tableModifyEventWas: false,
+  fileName: 'test',
 };
 
 const addValueToArray = (obj, value, index) => {
@@ -19,6 +20,9 @@ export const tableDataSlice = createSlice({
   name: 'tableData',
   initialState,
   reducers: {
+    setFileName: (state, action) => {
+      state.fileName = action.payload;
+    },
     tableDataInit: (state, action) => {
       let data = action.payload;
       action.payload.forEach((row, rowIndex) => {
@@ -138,6 +142,7 @@ export const {
   tableOpenMenuRowUpdate,
   tableRowsSwap,
   setTableModifyEventWas,
+  setFileName,
 } = tableDataSlice.actions;
 
 export default tableDataSlice.reducer;
