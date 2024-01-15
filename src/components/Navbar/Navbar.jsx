@@ -15,7 +15,7 @@ const NavBar = ({ setOpenFormatter }) => {
         width="44px"
         height="44px"
         cursor="pointer"
-        onClick={() => setOpenFormatter(false)}
+        onClick={() => window.location.reload()}
       />
       <Body
         padding="6px 16px"
