@@ -23,6 +23,15 @@ const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
     return <EntireScreenLoading />;
   }
 
+  const calculateTextLines = () => {
+    let numOfLines = 0;
+    Object.values(row).forEach((item) => {
+      numOfLines += item[0]?.textValue?.match(new RegExp("\\n", 'g'))?.length ? item[0].textValue.match(new RegExp("\\n", 'g'))?.length : 1;
+    })
+    console.log(numOfLines);
+    return numOfLines;
+  }
+
   if (!rowDeleted) {
     return (
       <TableRowStyle
@@ -47,6 +56,7 @@ const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
                 j={j}
                 item={item}
                 bboxIds={bboxIds}
+                numOfLines={calculateTextLines()}
               />
             );
           })}
@@ -60,7 +70,6 @@ const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
       </TableRowStyle>
     );
   }
-
 };
 
 export default TableRow;

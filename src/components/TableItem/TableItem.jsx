@@ -1,6 +1,5 @@
 import React from 'react';
 import TableItemStyle from './TableItemStyle';
-// import { onItemBlur, onItemFocus, onItemClick } from './tableItemHelper';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setTableModifyEventWas,
@@ -12,7 +11,7 @@ import {
 } from '../../redux/synchronizeSlice';
 import EntireScreenLoading from '../EntireScreenLoading';
 
-const TableItem = ({ i, j, item, bboxIds, readOnly }) => {
+const TableItem = ({ i, j, item, bboxIds, readOnly, numOfLines }) => {
   const dispatch = useDispatch();
   const tableModifyEventWas = useSelector(
     (state) => state.tableData.tableModifyEventWas
@@ -45,6 +44,7 @@ const TableItem = ({ i, j, item, bboxIds, readOnly }) => {
           className="tableItem"
           type="text"
           value={valueToUpdate}
+          lines={numOfLines}
         />
         <EntireScreenLoading />
       </>
@@ -57,6 +57,7 @@ const TableItem = ({ i, j, item, bboxIds, readOnly }) => {
       as="textarea"
       className="tableItem"
       type="text"
+      lines={numOfLines}
       onBlur={() => {
         dispatch(
           onItemBlur({

@@ -4,7 +4,9 @@ import { Container } from '../../utils/containers';
 const TableItemStyle = styled(Container)`
   position: relative;
   outline: none;
-  height: 300px;
+  min-height: 200px;
+  height: ${({ lines }) => `${lines * 25}px`};
+  max-height: 1000px;
   border: 1px solid black;
   padding: 14px 8px;
   justify-content: flex-start;

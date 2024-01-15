@@ -47,6 +47,7 @@ const NextPage = () => {
           backgroundColor="rgba(42, 42, 74, 1)"
           alignmentY="flex-start"
           width="100%"
+          minHeight="100vh"
         >
           <Table />
         </FlexColumn>
