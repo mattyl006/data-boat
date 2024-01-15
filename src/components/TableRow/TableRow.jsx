@@ -13,6 +13,7 @@ const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
   const itemsChecked = useSelector((state) => state.tableData.tableRowsChecked);
   const [rowMenuHover, setRowMenuHover] = React.useState(false);
   const [tableLoading, setTableLoading] = React.useState(false);
+  const [rowDeleted, setRowDeleted] = React.useState(false);
 
   React.useEffect(() => {
     setTableLoading(false);
@@ -22,40 +23,44 @@ const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
     return <EntireScreenLoading />;
   }
 
-  return (
-    <TableRowStyle
-      id={`row-${bboxIds}`}
-      key={`row-${i}`}
-      onClick={() => {
-        handleOnDrop(i);
-        dispatch(tableOpenMenuRowUpdate({ i: i, value: true }));
-      }}
-      onBlur={() => {
-        if (!rowMenuHover)
-          dispatch(tableOpenMenuRowUpdate({ i: i, value: false }));
-      }}
-      check={itemsChecked[i]}
-    >
-      {Object.entries(row)
-        .map((item, j) => {
-          return (
-            <TableItem
-              key={`item-${i}-${j}`}
-              i={i}
-              j={j}
-              item={item}
-              bboxIds={bboxIds}
-            />
-          );
-        })}
-      <RowMenu
-        i={i}
-        setRowMenuHover={setRowMenuHover}
-        handleOnDrag={(e) => handleOnDrag(e, row, i)}
-        setTableLoading={setTableLoading}
-      />
-    </TableRowStyle>
-  );
+  if (!rowDeleted) {
+    return (
+      <TableRowStyle
+        id={`row-${bboxIds}`}
+        key={`row-${i}`}
+        onClick={() => {
+          handleOnDrop(i);
+          dispatch(tableOpenMenuRowUpdate({ i: i, value: true }));
+        }}
+        onBlur={() => {
+          if (!rowMenuHover)
+            dispatch(tableOpenMenuRowUpdate({ i: i, value: false }));
+        }}
+        check={itemsChecked[i]}
+      >
+        {Object.entries(row)
+          .map((item, j) => {
+            return (
+              <TableItem
+                key={`item-${i}-${j}`}
+                i={i}
+                j={j}
+                item={item}
+                bboxIds={bboxIds}
+              />
+            );
+          })}
+        <RowMenu
+          i={i}
+          setRowMenuHover={setRowMenuHover}
+          handleOnDrag={(e) => handleOnDrag(e, row, i)}
+          setTableLoading={setTableLoading}
+          setRowDeleted={setRowDeleted}
+        />
+      </TableRowStyle>
+    );
+  }
+
 };
 
 export default TableRow;

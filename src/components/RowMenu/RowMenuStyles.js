@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 import { FlexColumn, FlexRow, Svg } from '../../utils/containers';
 
+const backgroundColorHandle = (theme, rowChecked, disabled) => {
+  if (rowChecked) {
+    return theme.colors.greenStrong;
+  }
+  if (disabled) {
+    return theme.colors.gray;
+  }
+  return theme.colors.white200;
+};
+
 const RowMenuStyle = styled(FlexColumn)`
   padding: ${({ freeSpaces }) => freeSpaces};
   gap: ${({ freeSpaces }) => freeSpaces};
@@ -17,9 +27,9 @@ const RowMenuRowStyle = styled(FlexRow)`
 const RowMenuIconStyle = styled(Svg)`
   width: ${({ iconSize }) => iconSize};
   height: ${({ iconSize }) => iconSize};
-  background-color: ${({ theme, rowChecked }) =>
-    rowChecked ? theme.colors.greenStrong : theme.colors.white200};
-  cursor: pointer;
+  background-color: ${({ theme, rowChecked, disabled }) =>
+    backgroundColorHandle(theme, rowChecked, disabled)};
+  cursor: ${({ disabled }) => (disabled ? 'auto' : 'pointer')};
 `;
 
 export { RowMenuStyle, RowMenuRowStyle, RowMenuIconStyle };

@@ -11,12 +11,18 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import {
   tableRowsCheckedUpdate,
-  tableDataAddNewRow,
-  tableDataDeleteRow,
+  // tableDataAddNewRow,
+  // tableDataDeleteRow,
 } from '../../redux/tableDataSlice';
-import { TIMEOUT_VALUE } from '../../utils/globals';
+// import { TIMEOUT_VALUE } from '../../utils/globals';
 
-const RowMenu = ({ i, setRowMenuHover, handleOnDrag, setTableLoading }) => {
+const RowMenu = ({
+  i,
+  setRowMenuHover,
+  handleOnDrag,
+  setRowDeleted,
+  setTableLoading,
+}) => {
   const dispatch = useDispatch();
   const rowMenuOpen = useSelector((state) => state.tableData.tableOpenMenuRow);
   const rowsChecked = useSelector((state) => state.tableData.tableRowsChecked);
@@ -32,12 +38,12 @@ const RowMenu = ({ i, setRowMenuHover, handleOnDrag, setTableLoading }) => {
     dispatch(tableRowsCheckedUpdate({ i: i, value: value }));
   };
 
-  const addRowHandle = (i) => {
-    setTableLoading(true);
-    setTimeout(() => {
-      dispatch(tableDataAddNewRow({ row: i }));
-    }, TIMEOUT_VALUE);
-  };
+  // const addRowHandle = (i) => {
+  //   setTableLoading(true);
+  //   setTimeout(() => {
+  //     dispatch(tableDataAddNewRow({ row: i }));
+  //   }, TIMEOUT_VALUE);
+  // };
 
   if (rowMenuOpen[i]) {
     return (
@@ -56,23 +62,22 @@ const RowMenu = ({ i, setRowMenuHover, handleOnDrag, setTableLoading }) => {
           <RowMenuIconStyle
             iconSize={iconSize}
             src={addRowIco}
-            onClick={() => addRowHandle(i)}
+            disabled
+            // onClick={() => addRowHandle(i)}
           />
         </RowMenuRowStyle>
         <RowMenuRowStyle freeSpaces={freeSpaces}>
           <RowMenuIconStyle
             iconSize={iconSize}
+            disabled
             src={dragRowIco}
-            onClick={(e) => handleOnDrag(e)}
+            // onClick={(e) => handleOnDrag(e)}
           />
           <RowMenuIconStyle
             iconSize={iconSize}
             src={removeRowIco}
             onClick={() => {
-              setTableLoading(true);
-              setTimeout(() => {
-                dispatch(tableDataDeleteRow({ row: i }));
-              }, TIMEOUT_VALUE);
+              setRowDeleted(true);
             }}
           />
         </RowMenuRowStyle>
