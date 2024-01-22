@@ -69,13 +69,14 @@ export const synchronizeSlice = createSlice({
     findTableRow: (state, action) => {
       const bboxId = action.payload;
       let findedItemId = null;
-      state.tableRowIds.forEach((rowIds) => {
-        rowIds.forEach((itemIds) => {
+      for (let rowIds of state.tableRowIds) {
+        if (findedItemId) break;
+        for (let itemIds of rowIds) {
           if (itemIds.includes(bboxId)) {
             findedItemId = itemIds;
           }
-        });
-      });
+        }
+      }
       if (findedItemId) {
         if (state.selectedTableItem) {
           const element = document.getElementById(
