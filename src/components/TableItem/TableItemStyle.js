@@ -13,7 +13,7 @@ const TableItemStyle = styled(Container)`
   color: ${({ theme }) => theme.colors.black};
 
   &:focus {
-    border: 2px solid ${({ theme }) => theme.colors.green};
+    border: 2px solid ${({ theme }) => 'rgb(4, 170, 109)'};
   }
 `;
 
