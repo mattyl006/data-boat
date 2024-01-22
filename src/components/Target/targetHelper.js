@@ -20,6 +20,9 @@ const downloadTable = (setObjUrl) => {
     const rowC = format(row[2].value);
     let rowD = format(row[3].value);
     if (rowD.length > 32000) {
+      alert(
+        'Przekroczony limit znaków w jednym wierszu. Proszę skrócić tekst w komórce, w przeciwnym razie Excel będzie ucinać tekst.'
+      );
       rowD = rowD.slice(0, 32000);
     }
     tsvContent += `${rowA}\t${rowB}\t${rowC}\t${rowD}\n`;
