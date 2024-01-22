@@ -43,7 +43,7 @@ const TableItem = ({ i, j, item, bboxIds, readOnly, numOfLines }) => {
           as="textarea"
           className="tableItem"
           type="text"
-          value={valueToUpdate}
+          value={item[1][0].textValue}
           lines={numOfLines}
         />
         <EntireScreenLoading />

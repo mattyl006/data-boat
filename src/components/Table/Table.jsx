@@ -66,6 +66,8 @@ const Table = () => {
     }
   };
 
+  console.log("render");
+
   return (
     <>
       <TableStyle id="Table">

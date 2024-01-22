@@ -11,10 +11,9 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import {
   tableRowsCheckedUpdate,
-  // tableDataAddNewRow,
+  tableDataAddNewRow,
   // tableDataDeleteRow,
 } from '../../redux/tableDataSlice';
-// import { TIMEOUT_VALUE } from '../../utils/globals';
 
 const RowMenu = ({
   i,
@@ -38,12 +37,12 @@ const RowMenu = ({
     dispatch(tableRowsCheckedUpdate({ i: i, value: value }));
   };
 
-  // const addRowHandle = (i) => {
-  //   setTableLoading(true);
-  //   setTimeout(() => {
-  //     dispatch(tableDataAddNewRow({ row: i }));
-  //   }, TIMEOUT_VALUE);
-  // };
+  const addRowHandle = (i) => {
+    // setTableLoading(true);
+    // setTimeout(() => {
+    // }, TIMEOUT_VALUE);
+    dispatch(tableDataAddNewRow({ rowClicked: i }));
+  };
 
   if (rowMenuOpen[i]) {
     return (
@@ -62,8 +61,7 @@ const RowMenu = ({
           <RowMenuIconStyle
             iconSize={iconSize}
             src={addRowIco}
-            disabled
-            // onClick={() => addRowHandle(i)}
+            onClick={() => addRowHandle(i)}
           />
         </RowMenuRowStyle>
         <RowMenuRowStyle freeSpaces={freeSpaces}>

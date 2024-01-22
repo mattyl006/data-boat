@@ -4,10 +4,15 @@ const format = (text) => {
   return text.replaceAll('\n', '').replaceAll('\t', '');
 };
 
+const compareByOrder = (a, b) => {
+  return Number(a.attributes.order.value) - Number(b.attributes.order.value);
+};
+
 const downloadTable = (setObjUrl) => {
-  const tableData = Object.values(
-    document.getElementById('Table').childNodes
-  ).map((node) => node.childNodes);
+  const nodes = Object.values(document.getElementById('Table').childNodes).sort(
+    compareByOrder
+  );
+  const tableData = nodes.map((node) => node.childNodes);
   let tsvContent = `a\tb\tc\td\n`;
   tableData.forEach((row) => {
     const rowA = format(row[0].value);

@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  tableData: [],
+  tableData: [], // RENDER ONLY ONCE!
+  tableDataProperties: [], // MODIFY DURING WORK, BUT ONLY IN TABLE ROWS
+  rowsAdded: 0,
   tableRowsChecked: [],
   tableOpenMenuRow: [],
   tableModifyEventWas: false,
@@ -25,6 +27,14 @@ export const tableDataSlice = createSlice({
     },
     tableDataInit: (state, action) => {
       let data = action.payload;
+      let dataProperties = [];
+      const emptyRowsNum = 100;
+      [...Array(emptyRowsNum)].forEach((_) => {
+        dataProperties.push({
+          visible: false,
+          order: -1,
+        });
+      });
       action.payload.forEach((row, rowIndex) => {
         Object.keys(row).forEach((col) => {
           if (action.payload[rowIndex]) {
@@ -41,11 +51,25 @@ export const tableDataSlice = createSlice({
             };
           }
         });
+        dataProperties.push({
+          visible: true,
+          order: rowIndex,
+        });
       });
-      state.tableData = data;
+      const emptyRow = {
+        '1st': [{ textValue: '' }],
+        '2nd': [{ textValue: '' }],
+        '3rd': [{ textValue: '' }],
+        '4th': [{ textValue: '' }],
+      };
+      [...Array(emptyRowsNum)].forEach((_) => {
+        data = addValueToArray(data, emptyRow, 0);
+      });
       const initBoolVector = Array(data.length).fill(false);
       state.tableRowsChecked = initBoolVector;
       state.tableOpenMenuRow = initBoolVector;
+      state.tableData = data;
+      state.tableDataProperties = dataProperties;
     },
     tableDataUpdate: (state, action) => {
       const { row, column, value } = action.payload;
@@ -55,28 +79,13 @@ export const tableDataSlice = createSlice({
       };
     },
     tableDataAddNewRow: (state, action) => {
-      const { row } = action.payload;
-      const emptyRow = {
-        '1st': [{ textValue: '' }],
-        '2nd': [{ textValue: '' }],
-        '3rd': [{ textValue: '' }],
-        '4th': [{ textValue: '' }],
-      };
-      const newTableData = addValueToArray(state.tableData, emptyRow, row);
-      const newTableRowsChecked = addValueToArray(
-        state.tableRowsChecked,
-        false,
-        row
-      );
-      const newTableOpenMenuRow = addValueToArray(
-        state.tableOpenMenuRow,
-        false,
-        row
-      );
-      state.tableData = newTableData;
-      state.tableRowsChecked = newTableRowsChecked;
-      state.tableOpenMenuRow = newTableOpenMenuRow;
-      state.tableModifyEventWas = true;
+      const { rowClicked } = action.payload;
+      const rowToShow = state.rowsAdded;
+      state.tableDataProperties[rowToShow].order =
+        state.tableDataProperties[rowClicked].order;
+      state.tableDataProperties[rowToShow].visible = true;
+      state.rowsAdded = rowToShow + 1;
+      // state.tableModifyEventWas = true;
     },
     tableDataDeleteRow: (state, action) => {
       const { row } = action.payload;

@@ -11,6 +11,7 @@ const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.tableData.tableData);
   const itemsChecked = useSelector((state) => state.tableData.tableRowsChecked);
+  const dataProperties = useSelector((state) => state.tableData.tableDataProperties);
   const [rowMenuHover, setRowMenuHover] = React.useState(false);
   const [tableLoading, setTableLoading] = React.useState(false);
   const [rowDeleted, setRowDeleted] = React.useState(false);
@@ -28,15 +29,15 @@ const TableRow = ({ i, row, bboxIds, handleOnDrop, handleOnDrag }) => {
     Object.values(row).forEach((item) => {
       numOfLines += item[0]?.textValue?.match(new RegExp("\\n", 'g'))?.length ? item[0].textValue.match(new RegExp("\\n", 'g'))?.length : 1;
     })
-    console.log(numOfLines);
     return numOfLines;
   }
 
-  if (!rowDeleted) {
+  if (!rowDeleted && dataProperties[i]?.visible) {
     return (
       <TableRowStyle
         id={`row-${bboxIds}`}
         key={`row-${i}`}
+        order={dataProperties[i]?.order}
         onClick={() => {
           handleOnDrop(i);
           dispatch(tableOpenMenuRowUpdate({ i: i, value: true }));

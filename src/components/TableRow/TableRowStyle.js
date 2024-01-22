@@ -3,6 +3,8 @@ import { Grid } from '../../utils/containers';
 
 const TableRowStyle = styled(Grid)`
   /* grid-template-columns: 1fr 1fr 1fr 1fr; */
+  /* display: ${({ visible }) => (visible ? 'grid' : 'none')}; */
+  order: ${({ order }) => order};
   grid-template-columns: 1fr 2fr 1fr 6fr;
   width: 100%;
   position: relative;
