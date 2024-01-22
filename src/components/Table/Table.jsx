@@ -22,7 +22,7 @@ const Table = () => {
   //   forceUpdate();
   // }, [forceUpdate, items]);
 
-  console.log(items);
+  console.log("render table");
 
   React.useEffect(() => {
     if (tableRowDrop === null) {
@@ -65,8 +65,6 @@ const Table = () => {
       );
     }
   };
-
-  console.log("render");
 
   return (
     <>

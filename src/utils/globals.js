@@ -4,7 +4,7 @@ const IS_MOBILE = () => {
   return document.body.clientWidth <= 768;
 };
 const TIMEOUT_VALUE = 100;
-
+const EMPTY_ROWS_NUM = 500;
 const TEST_TARGET_ITEMS = [
   {
     a: '2.1.1',
@@ -20,4 +20,11 @@ const TEST_TARGET_ITEMS = [
   },
 ];
 
-export { API, TEST_TARGET_ITEMS, ELEMENTS_PER_PAGE, TIMEOUT_VALUE, IS_MOBILE };
+export {
+  API,
+  TEST_TARGET_ITEMS,
+  ELEMENTS_PER_PAGE,
+  TIMEOUT_VALUE,
+  EMPTY_ROWS_NUM,
+  IS_MOBILE,
+};

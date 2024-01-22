@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { EMPTY_ROWS_NUM } from '../utils/globals';
 
 const initialState = {
   tableData: [], // RENDER ONLY ONCE!
@@ -7,7 +8,7 @@ const initialState = {
   tableRowsChecked: [],
   tableOpenMenuRow: [],
   tableModifyEventWas: false,
-  fileName: 'test',
+  fileName: '',
 };
 
 const addValueToArray = (obj, value, index) => {
@@ -28,8 +29,7 @@ export const tableDataSlice = createSlice({
     tableDataInit: (state, action) => {
       let data = action.payload;
       let dataProperties = [];
-      const emptyRowsNum = 100;
-      [...Array(emptyRowsNum)].forEach((_) => {
+      [...Array(EMPTY_ROWS_NUM)].forEach((_) => {
         dataProperties.push({
           visible: false,
           order: -1,
@@ -62,7 +62,7 @@ export const tableDataSlice = createSlice({
         '3rd': [{ textValue: '' }],
         '4th': [{ textValue: '' }],
       };
-      [...Array(emptyRowsNum)].forEach((_) => {
+      [...Array(EMPTY_ROWS_NUM)].forEach((_) => {
         data = addValueToArray(data, emptyRow, 0);
       });
       const initBoolVector = Array(data.length).fill(false);
@@ -79,13 +79,18 @@ export const tableDataSlice = createSlice({
       };
     },
     tableDataAddNewRow: (state, action) => {
-      const { rowClicked } = action.payload;
-      const rowToShow = state.rowsAdded;
-      state.tableDataProperties[rowToShow].order =
-        state.tableDataProperties[rowClicked].order;
-      state.tableDataProperties[rowToShow].visible = true;
-      state.rowsAdded = rowToShow + 1;
-      // state.tableModifyEventWas = true;
+      if (state.rowsAdded + 1 > EMPTY_ROWS_NUM) {
+        alert(
+          'Przekroczony został limit dodawania wierszy, następna próba dodania wiersza zakłóciłaby strukturę tabeli.'
+        );
+      } else {
+        const { rowClicked } = action.payload;
+        const rowToShow = state.rowsAdded;
+        state.tableDataProperties[rowToShow].order =
+          state.tableDataProperties[rowClicked].order;
+        state.tableDataProperties[rowToShow].visible = true;
+        state.rowsAdded = rowToShow + 1;
+      }
     },
     tableDataDeleteRow: (state, action) => {
       const { row } = action.payload;
