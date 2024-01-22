@@ -5,7 +5,7 @@ import { Svg } from '../../utils/containers';
 import { Body } from '../../utils/fonts';
 import NavbarStyle from './NavbarStyle';
 
-const NavBar = ({ setOpenFormatter }) => {
+const NavBar = () => {
   return (
     <NavbarStyle>
       <Svg
@@ -14,8 +14,6 @@ const NavBar = ({ setOpenFormatter }) => {
         size="cover"
         width="44px"
         height="44px"
-        cursor="pointer"
-        onClick={() => window.location.reload()}
       />
       <Body
         padding="6px 16px"
