@@ -75,7 +75,7 @@ const Source = ({ images, imageBboxes }) => {
                   bboxFocus={false}
                   onClick={() => dispatch(findTableRow(bbox.id))}
                 >
-                  <BboxTextStyle>{text}</BboxTextStyle>
+                  <BboxTextStyle className='BboxTextStyle'>{text}</BboxTextStyle>
                 </BboxStyle>
               );
             })}

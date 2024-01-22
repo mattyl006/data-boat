@@ -33,6 +33,12 @@ const BboxTextStyle = styled(Container)`
   top: 0;
   left: 0;
   width: calc(100% + 100px);
+  padding: 4px;
+
+  &:hover {
+    color: white;
+    background-color: ${({ theme }) => theme.colors.blue};
+  }
 `;
 
 const BboxStyle = styled(Container)`
@@ -49,7 +55,7 @@ const BboxStyle = styled(Container)`
   z-index: 3;
 
   &:hover {
-    border: 1px solid rgba(0, 208, 132, 1);
+    border: 2px solid rgb(4, 170, 109);
   }
 `;
 
