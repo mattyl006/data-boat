@@ -1,7 +1,7 @@
 import { write, read } from 'xlsx';
 
 const format = (text) => {
-  return text.replaceAll('\n', '').replaceAll('\t', '');
+  return '"' + text.replaceAll('\t', '    ') + '"';
 };
 
 const compareByOrder = (a, b) => {
