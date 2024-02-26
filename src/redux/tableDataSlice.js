@@ -61,6 +61,7 @@ export const tableDataSlice = createSlice({
         '2nd': [{ textValue: '' }],
         '3rd': [{ textValue: '' }],
         '4th': [{ textValue: '' }],
+        '5th': [{ textValue: '' }],
       };
       [...Array(EMPTY_ROWS_NUM)].forEach((_) => {
         data = addValueToArray(data, emptyRow, 0);
