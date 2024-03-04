@@ -13,7 +13,7 @@ const downloadTable = (setObjUrl) => {
     compareByOrder
   );
   const tableData = nodes.map((node) => node.childNodes);
-  let tsvContent = `a\tb\tc\td\n`;
+  let tsvContent = `Number\tTitle\tSubnumber\tDescription\tFK Code\n`;
   tableData.forEach((row) => {
     const rowA = format(row[0].value);
     const rowB = format(row[1].value);
@@ -25,7 +25,8 @@ const downloadTable = (setObjUrl) => {
       );
       rowD = rowD.slice(0, 32000);
     }
-    tsvContent += `${rowA}\t${rowB}\t${rowC}\t${rowD}\n`;
+    const rowE = format(row[4].value);
+    tsvContent += `${rowA}\t${rowB}\t${rowC}\t${rowD}\t${rowE}\n`;
   });
   const wb = read(tsvContent.split(',').join('","'), {
     type: 'string',
